@@ -24,11 +24,11 @@ export default class UsersRepository {
 
   async createUser(user) {
     try {
-      await this.pg.none("INSERT INTO users (id, name, password, admin) VALUES ($1, $2, $3, $4)", [
+      await this.pg.none("INSERT INTO users (id, nome, senha, tipo) VALUES ($1, $2, $3, $4)", [
         user.id,
-        user.name,
-        user.password,
-        user.admin
+        user.nome,
+        user.senha,
+        user.tipo
       ]);
       return user;
     } catch (error) {
@@ -36,7 +36,7 @@ export default class UsersRepository {
     }
   };
 
-  async updateUser(id, name, password, admin) {
+  async updateUser(id, nome, senha, tipo) {
     try {
       const user = this.getUserById(id);
 
@@ -45,8 +45,8 @@ export default class UsersRepository {
       }
 
       const updateUser = await this.pg.oneOrNone(
-        "UPDATE users SET name = $1, password = $2, admin = $4 WHERE id = $4 RETURNING *",
-        [name, password, admin, id]
+        "UPDATE users SET nome = $1, senha = $2, tipo = $4 WHERE id = $4 RETURNING *",
+        [nome, senha, tipo, id]
       );
 
       return updateUser;
