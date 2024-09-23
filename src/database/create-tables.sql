@@ -8,13 +8,13 @@ DROP TABLE times;
 DROP TABLE modalidade;
 DROP TABLE campeonato;
 
-CREATE TABLE campeonato (
+CREATE TABLE IF NOT EXISTS campeonato (
 id VARCHAR(100) PRIMARY KEY NOT NULL,
 titulo VARCHAR(100) NOT NULL,
 data_inicio DATE NOT NULL,
 data_final DATE NOT NULL);
 
-CREATE TABLE modalidade (
+CREATE TABLE IF NOT EXISTS modalidade (
 id VARCHAR(100) PRIMARY KEY NOT NULL,
 nome_modalidade VARCHAR(100) NOT NULL UNIQUE,
 descricao text,
@@ -24,10 +24,7 @@ valor_por_pessoas INT NOT NULL,
 type BOOLEAN NOT NULL,
 FOREIGN KEY(campeonato_id) REFERENCES campeonato(id));
 
-//teste
-
-
-CREATE TABLE times (
+CREATE TABLE IF NOT EXISTS times (
 id VARCHAR(100) PRIMARY KEY NOT NULL,
 nome VARCHAR(100) NOT NULL,
 sala VARCHAR(100),
@@ -37,7 +34,7 @@ pontos INT DEFAULT(0),
 FOREIGN KEY(modalidade_id) REFERENCES modalidade(id));
 
 
-CREATE TABLE jogador (
+CREATE TABLE IF NOT EXISTS jogador (
 id VARCHAR(100) PRIMARY KEY NOT NULL,
 nome VARCHAR(100) NOT NULL,
 sala VARCHAR(100) NOT NULL,
