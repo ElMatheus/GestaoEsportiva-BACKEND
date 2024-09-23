@@ -3,16 +3,17 @@ CREATE DATABASE gestaoesportiva;
 
 DROP DATABASE gestaoesportiva;
 
+DROP TABLE campeonato;
 DROP TABLE jogador;
 DROP TABLE times;
 DROP TABLE modalidade;
-DROP TABLE campeonato;
 
 CREATE TABLE campeonato (
 id VARCHAR(100) PRIMARY KEY NOT NULL,
 titulo VARCHAR(100) NOT NULL,
 data_inicio DATE NOT NULL,
-data_final DATE NOT NULL);
+data_final DATE NOT NULL
+);
 
 CREATE TABLE modalidade ( 
 id VARCHAR(100) PRIMARY KEY NOT NULL,
@@ -22,8 +23,7 @@ limite_pessoas INT NOT NULL,
 campeonato_id VARCHAR(100) NOT NULL,
 valor_por_pessoas INT NOT NULL,
 type BOOLEAN NOT NULL,
-FOREIGN KEY(campeonato_id) REFERENCES campeonato(id) ON UPDATE CASCADE ON DELETE CASCADE);
-
+FOREIGN KEY(campeonato_id) REFERENCES campeonato(id));
 
 CREATE TABLE times (
 id VARCHAR(100) PRIMARY KEY NOT NULL,
@@ -32,7 +32,7 @@ sala VARCHAR(100),
 modalidade_id VARCHAR(100) NOT NULL,
 status VARCHAR(100) NOT NULL,
 pontos INT DEFAULT(0),
-FOREIGN KEY(modalidade_id) REFERENCES modalidade(id) ON UPDATE CASCADE ON DELETE CASCADE);
+FOREIGN KEY(modalidade_id) REFERENCES modalidade(id));
 
 
 CREATE TABLE jogador (
@@ -40,4 +40,20 @@ id VARCHAR(100) PRIMARY KEY NOT NULL,
 nome VARCHAR(100) NOT NULL,
 sala VARCHAR(100) NOT NULL,
 time_id VARCHAR(100) NOT NULL,
-FOREIGN KEY(time_id) REFERENCES times(id) ON UPDATE CASCADE ON DELETE CASCADE);
+FOREIGN KEY(time_id) REFERENCES times(id));
+
+
+CREATE TABLE IF NOT EXISTS users (
+    id VARCHAR(36) PRIMARY KEY,
+    name VARCHAR(255) NOT NULL UNIQUE,
+    cnpj VARCHAR(18) NOT NULL UNIQUE,
+    tel VARCHAR(15) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS refresh_token (
+    id VARCHAR(36) PRIMARY KEY,
+    expiresIn INT NOT NULL,
+    user_id VARCHAR(36) NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
