@@ -58,5 +58,22 @@ export default class UsersRepository {
       throw error;
     }
   }
+  async getCampeonatoByTitulo(titulo) {
+    try {
+      const campeonato = await this.pg.oneOrNone("SELECT * FROM Campeonato WHERE titulo = $1", titulo);
+      return campeonato;
+    } catch (error) {
+      throw error;
+    }
+  }
+  async getDuracaoCampeonato(id) {
+    try {
+      const campeonato = await this.pg.oneOrNone("SELECT data_inicio, data_final FROM Campeonato WHERE id = $1", id);
+      return campeonato;
+    } catch (error) {
+      throw error;
+    }
+  }
 }
+
   
