@@ -32,4 +32,31 @@ export default class UsersRepository {
       throw error;
     }
   }
+  async updateCampeonato(id, titulo, data_inicio, data_final) {
+    try {
+      const campeonato = this.getCampeonatoById(id);
+      if (!campeonato) {
+        return null;
+      }
+      await this.pg.none("UPDATE Campeonato SET titulo = $1, data_inicio = $2, data_final = $3 WHERE id = $4", [titulo, data_inicio, data_final, id]);
+      return campeonato;
+    }
+    catch (error) {
+      throw error;
+    }
+  }
+  async deleteCampeonato(id) {
+    try {
+      const campeonato = this.getCampeonatoById(id);
+      if (!campeonato) {
+        return null;
+      }
+      await this.pg.none("DELETE FROM Campeonato WHERE id = $1", id);
+      return campeonato;
+    }
+    catch (error) {
+      throw error;
+    }
+  }
+}
   
