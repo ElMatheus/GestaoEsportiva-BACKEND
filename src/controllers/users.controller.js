@@ -41,9 +41,9 @@ export const getUserById = async (req, res) => {
 // pegar usuario por nome
 export const getUserByName = async (req, res) => {
   try {
-    const { name } = req.params;
+    const { nome } = req.params;
 
-    const user = await usersRepository.getUserByName(name);
+    const user = await usersRepository.getUserByName(nome);
     // verificacao se usuario existe
     if (!user) {
       return res.status(404).send({ message: "Usuário não encontrado" });
@@ -60,16 +60,16 @@ export const getUserByName = async (req, res) => {
 // criar usuario
 export const createUser = async (req, res) => {
   try {
-    const { name, password, admin } = req.body;
+    const { nome, senha, tipo } = req.body;
 
-    const userAlreadyExistsName = await usersRepository.getUserByName(name);
+    const userAlreadyExistsName = await usersRepository.getUserByName(nome);
     if (userAlreadyExistsName) {
       return res.status(409).send({ message: "Nome já cadastrado" });
     }
     // hash na senha
-    const passwordHash = await hash(password, 8);
+    const passwordHash = await hash(senha, 8);
 
-    const user = new User(name, passwordHash, admin);
+    const user = new User(nome, passwordHash, tipo);
 
     await usersRepository.createUser(user);
 
@@ -82,7 +82,7 @@ export const createUser = async (req, res) => {
 export const updateUser = async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, password, admin } = req.body;
+    const { nome, senha, admin } = req.body;
 
     const userById = await usersRepository.getUserById(id);
     // verificacao se usuario existe
@@ -90,9 +90,9 @@ export const updateUser = async (req, res) => {
       return res.status(404).send({ message: "Usuário não encontrado" });
     }
     // hash na senha
-    const passwordHash = await hash(password, 8);
+    const passwordHash = await hash(senha, 8);
 
-    const user = await usersRepository.updateUser(id, name, passwordHash, admin);
+    const user = await usersRepository.updateUser(id, nome, passwordHash, tipo);
 
     return res
       .status(200)
@@ -124,15 +124,15 @@ export const deleteUser = async (req, res) => {
 // login users
 export const loginUser = async (req, res) => {
   try {
-    const { name, password } = req.body;
+    const { nome, senha } = req.body;
 
-    const user = await usersRepository.getUserByName(name);
+    const user = await usersRepository.getUserByName(nome);
     // verificacao se usuario existe pelo nome
     if (!user) {
       return res.status(404).send({ message: "Usuário não encontrado" });
     }
     // comparacao de senha com hash
-    const passwordMatch = await compare(password, user.password);
+    const passwordMatch = await compare(senha, user.senha);
     // se tiver erro na senha retorna isso
     if (!passwordMatch) {
       return res.status(401).send({ message: "Nome ou senha inválidos" });
