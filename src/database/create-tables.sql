@@ -24,6 +24,8 @@ valor_por_pessoas INT NOT NULL,
 type BOOLEAN NOT NULL,
 FOREIGN KEY(campeonato_id) REFERENCES campeonato(id));
 
+//teste
+
 
 CREATE TABLE times (
 id VARCHAR(100) PRIMARY KEY NOT NULL,
