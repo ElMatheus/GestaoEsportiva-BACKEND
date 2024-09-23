@@ -1,4 +1,4 @@
-     CREATE TABLE IF NOT EXISTS campeonato (
+CREATE TABLE IF NOT EXISTS campeonato (
 id VARCHAR(100) PRIMARY KEY NOT NULL,
 titulo VARCHAR(100) NOT NULL,
 data_inicio DATE NOT NULL,
@@ -33,14 +33,6 @@ sala VARCHAR(100) NOT NULL,
 time_id VARCHAR(100) NOT NULL,
 FOREIGN KEY(time_id) REFERENCES times(id));
 
-CREATE TABLE IF NOT EXISTS partida (
-    id SERIAL PRIMARY KEY,
-    data DATE NOT NULL,
-    anotacao TEXT,
-    updAtDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updAtIdUser VARCHAR(100),
-    FOREIGN KEY (updAtIdUser) REFERENCES users(id)
-)
 
 CREATE TABLE IF NOT EXISTS users (
     id VARCHAR(36) PRIMARY KEY,
@@ -54,4 +46,13 @@ CREATE TABLE IF NOT EXISTS refresh_token (
     expiresIn INT NOT NULL,
     user_id VARCHAR(36) NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+CREATE TABLE IF NOT EXISTS partida (
+    id SERIAL PRIMARY KEY,
+    data DATE NOT NULL,
+    anotacao TEXT,
+    updAtDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updAtIdUser VARCHAR(100),
+    FOREIGN KEY (updAtIdUser) REFERENCES users(id)
 );
