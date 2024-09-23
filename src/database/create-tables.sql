@@ -3,10 +3,10 @@ CREATE DATABASE gestaoesportiva;
 
 DROP DATABASE gestaoesportiva
 
+DROP TABLE campeonato;
 DROP TABLE jogador;
 DROP TABLE times;
 DROP TABLE modalidade;
-DROP TABLE campeonato;
 
 CREATE TABLE campeonato (
 id VARCHAR(100) PRIMARY KEY NOT NULL,
