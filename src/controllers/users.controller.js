@@ -121,7 +121,7 @@ export const deleteUser = async (req, res) => {
     return res.status(500).send({ message: "Erro ao deletar usuário", error: error.message });
   }
 };
-// login
+// login users
 export const loginUser = async (req, res) => {
   try {
     const { name, password } = req.body;
