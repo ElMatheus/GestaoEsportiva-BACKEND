@@ -73,7 +73,8 @@ export const updateModalidade = async (req, res) => {
     }
     const modalidade = new Modalidade(nome, descricao, limite_pessoas, campeonato_id, valor_por_pessoa, tipo);
     await modalidadeRepository.updateModalidade(modalidade, id);
-    return res.status(200).send(modalidade);
+    return res.status(200).send({ message: "Modalidade atualizada com sucesso", modalidade });
+
   } catch (error) {
     return res.status(500).send({ message: "Erro ao atualizar modalidade", error: error.message });
   }
@@ -87,7 +88,7 @@ export const deleteModalidade = async (req, res) => {
       return res.status(404).send({ message: "Modalidade não encontrada" });
     }
     await modalidadeRepository.deleteModalidade(id);
-    return res.status(204).send();
+    return res.status(200).send({ message: "Modalidade deletada com sucesso", modalidadeExist });
   } catch (error) {
     return res.status(500).send({ message: "Erro ao deletar modalidade", error: error.message });
   }
