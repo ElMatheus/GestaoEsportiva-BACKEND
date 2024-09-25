@@ -32,7 +32,7 @@ export default class ModalidadesRepository {
       const modalidade = await this.pg.manyOrNone("SELECT * FROM modalidade WHERE campeonato_id = $1", campeonato_id);
       return modalidade;
     } catch (error) {
-      throw
+      throw error;
     }
   }
   async createModalidade(modalidade) {
@@ -67,7 +67,6 @@ export default class ModalidadesRepository {
       throw error;
     }
   }
-
   async getModalidadeByTipo(tipo) {
     try {
       const modalidade = await this.pg.manyOrNone("SELECT * FROM modalidade WHERE tipo = $1", tipo);
