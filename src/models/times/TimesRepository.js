@@ -58,7 +58,7 @@ export default class UsersRepository {
 
     async getTimeByModalidadeID(modalidade_id) {
         try {
-            const time = await this.pg.oneOrNone("SELECT * FROM times WHERE modalidade_id = $1", modalidade_id);
+            const time = await this.pg.oneOrNone("SELECT * FROM times WHERE LOWER(modalidade_id) LIKE $1", modalidade_id.toLocaleLowerCase());
             return time;
         } catch (error) {
             throw error;
@@ -68,7 +68,7 @@ export default class UsersRepository {
 
     async getTimeBySala(sala) {
         try {
-            const time = await this.pg.oneOrNone("SELECT * FROM times WHERE sala = $1", sala);
+            const time = await this.pg.oneOrNone("SELECT * FROM times WHERE LOWER(sala) LIKE $1", sala.toLocaleLowerCase());
             return time;
         } catch (error) {
             throw error;
