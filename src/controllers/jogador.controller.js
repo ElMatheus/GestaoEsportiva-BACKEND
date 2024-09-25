@@ -1,13 +1,15 @@
 import Jogador from '../models/jogador/JogadorRepository.js';
 import JogadorRepository from '../models/jogador/JogadorRepository.js';
 
+const jogadorRepository = new JogadorRepository();
+
 export const createJogador = async (req, res) => {
     try {
         const { nome, sala, time_id } = req.body;
 
         const jogador = new Jogador(nome, sala, time_id);
 
-        await JogadorRepository.createJogador(jogador);
+        await jogadorRepository.createJogador(jogador);
 
         return res.status(201).send(jogador);
     } catch (error) {
@@ -17,7 +19,7 @@ export const createJogador = async (req, res) => {
 
 export const getJogadores = async (req, res) => {
     try {
-        const jogadores = await JogadorRepository.getAllJogadores();
+        const jogadores = await jogadorRepository.getAllJogadores();
 
         return res.status(200).send(jogadores);
     } catch (error) {
@@ -29,7 +31,7 @@ export const getJogadorById = async (req, res) => {
     try {
         const { id } = req.params;
 
-        const jogador = await JogadorRepository.getJogadorById(id);
+        const jogador = await jogadorRepository.getJogadorById(id);
 
         if (!jogador) {
             return res.status(404).send({ message: "Jogador não encontrado" });
@@ -46,7 +48,7 @@ export const updateJogador = async (req, res) => {
         const { id } = req.params;
         const { nome, sala, time_id } = req.body;
 
-        const jogador = await JogadorRepository.updateJogador(id, nome, sala, time_id);
+        const jogador = await jogadorRepository.updateJogador(id, nome, sala, time_id);
 
         if (!jogador) {
             return res.status(404).send({ message: "Jogador não encontrado" });
@@ -63,7 +65,7 @@ export const getJogadorByTimeID = async (req, res) => {
     try {
         const { time_id } = req.params;
 
-        const jogador = await JogadorRepository.getJogadorByTimeID(time_id);
+        const jogador = await jogadorRepository.getJogadorByTimeID(time_id);
 
         if (!jogador) {
             return res.status(404).send({ message: "Jogador não encontrado" });
@@ -80,13 +82,13 @@ export const deleteJogador = async (req, res) => {
     try {
         const { id } = req.params;
 
-        const jogador = await JogadorRepository.getJogadorById(id);
+        const jogador = await jogadorRepository.getJogadorById(id);
 
         if (!jogador) {
             return res.status(404).send({ message: "Jogador não encontrado" });
         }
 
-        await JogadorRepository.deleteJogador(id);
+        await jogadorRepository.deleteJogador(id);
 
         return res.status(200).send({ message: "Jogador deletado", jogador });
     } catch (error) {
@@ -98,7 +100,7 @@ export const getJogadorBySala = async (req, res) => {
     try {
         const { sala } = req.params;
 
-        const jogador = await JogadorRepository.getJogadorBySala(sala);
+        const jogador = await jogadorRepository.getJogadorBySala(sala);
 
         if (!jogador) {
             return res.status(404).send({ message: "Jogador não encontrado" });

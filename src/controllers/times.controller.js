@@ -1,13 +1,15 @@
 import Times from '../models/times/Times.js';
 import TimesRepository from '../models/times/TimesRepository.js';
 
+const timesRepository = new TimesRepository();
+
 export const createTimes = async (req, res) => {
     try {
         const { nome, sala, modalidade_id, status } = req.body;
 
         const times = new Times(nome, sala, modalidade_id, status);
 
-        await TimesRepository.createTimes(times);
+        await timesRepository.createTimes(times);
 
         return res.status(201).send(times);
     } catch (error) {
@@ -17,7 +19,7 @@ export const createTimes = async (req, res) => {
 
 export const getTimes = async (req, res) => {
     try {
-        const times = await TimesRepository.getAllTimes();
+        const times = await timesRepository.getAllTimes();
 
         return res.status(200).send(times);
     } catch (error) {
@@ -29,7 +31,7 @@ export const getTimesById = async (req, res) => {
     try {
         const { id } = req.params;
 
-        const times = await TimesRepository.getTimesById(id);
+        const times = await timesRepository.getTimesById(id);
 
         if (!times) {
             return res.status(404).send({ message: "Time não encontrado" });
@@ -46,7 +48,7 @@ export const updateTimes = async (req, res) => {
         const { id } = req.params;
         const { nome, sala, modalidade_id, status, pontos } = req.body;
 
-        const times = await TimesRepository.updateTimes(id, nome, sala, modalidade_id, status, pontos);
+        const times = await timesRepository.updateTimes(id, nome, sala, modalidade_id, status, pontos);
 
         if (!times) {
             return res.status(404).send({ message: "Time não encontrado" });
@@ -62,7 +64,7 @@ export const getTimesByModalidadeID = async (req, res) => {
     try {
         const { modalidade_id } = req.params;
 
-        const times = await TimesRepository.getTimesByModalidadeID(modalidade_id);
+        const times = await timesRepository.getTimesByModalidadeID(modalidade_id);
 
         return res.status(200).send(times);
     } catch (error) {
@@ -74,7 +76,7 @@ export const getTimesBySala = async (req, res) => {
     try {
         const { sala } = req.params;
 
-        const times = await TimesRepository.getTimesBySala(sala);
+        const times = await timesRepository.getTimesBySala(sala);
 
         return res.status(200).send(times);
     } catch (error) {
@@ -86,13 +88,13 @@ export const deleteTimes = async (req, res) => {
     try {
         const { id } = req.params;
 
-        const times = await TimesRepository.getTimesById(id);
+        const times = await timesRepository.getTimesById(id);
 
         if (!times) {
             return res.status(404).send({ message: "Time não encontrado" });
         }
 
-        await TimesRepository.deleteTimes(id);
+        await timesRepository.deleteTimes(id);
 
         return res.status(200).send({ message: "Time deletado" });
     } catch (error) {
