@@ -1,6 +1,6 @@
 import pgp from "pg-promise";
 import { config } from "dotenv";
-import fs from "fs";
+import readline from "readline";
 import path, { join } from "path";
 import { fileURLToPath } from "url";
 
@@ -31,13 +31,28 @@ const updateTablesFilePath = join(__dirname, "update-tables.sql");
 const createTablesQuery = new pgp.QueryFile(createTablesFilePath);
 const updateTablesQuery = new pgp.QueryFile(updateTablesFilePath);
 
-pg.query(createTablesQuery).then(() => {
-    console.log("Tabelas criadas com sucesso.");
-    return pg.query(updateTablesQuery);
-}).then(() => {
-    console.log("Tabelas atualizadas com sucesso.");
-}).catch(error => {
-    console.error("Erro ao criar ou atualizar tabelas:", error);
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+
+rl.question("Deseja atualizar as tabelas? (atualizar/n): ", (resposta) => {
+    if (resposta.toLowerCase() === 'atualizar') {
+        pg.query(updateTablesQuery).then(() => {
+            console.log("Tabelas atualizadas com sucesso.");
+        }).catch(error => {
+            console.error("Erro ao criar ou atualizar tabelas:", error);
+        }).finally(() => {
+            rl.close();
+        });
+    } else {
+        pg.query(createTablesQuery).catch(error => {
+            console.error("Erro ao criar tabelas:", error);
+        }).finally(() => {
+            rl.close();
+        }
+        );
+    }
 });
 
 export default pg;
