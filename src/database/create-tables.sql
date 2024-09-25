@@ -11,8 +11,8 @@ nome_modalidade VARCHAR(100) NOT NULL UNIQUE,
 descricao text,
 limite_pessoas INT NOT NULL,
 campeonato_id VARCHAR(100) NOT NULL,
-valor_por_pessoas INT NOT NULL,
-type BOOLEAN NOT NULL,
+valor_por_pessoa INT NOT NULL,
+tipo BOOLEAN NOT NULL,
 FOREIGN KEY(campeonato_id) REFERENCES campeonato(id)
 );
 

@@ -1,6 +1,6 @@
 import pg from "../../database/index.js"
 export default class CampeonatosRepository {
-  constructor() {
+  constructor() { 
     this.pg = pg;
   };
   async getCampeonatos() {
