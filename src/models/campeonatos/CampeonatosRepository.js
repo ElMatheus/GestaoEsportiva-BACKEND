@@ -29,7 +29,8 @@ export default class CampeonatosRepository {
   }
   async getCampeonatoByTituloWithDate(titulo, data) {
     try {
-      const campeonato = await this.pg.manyOrNone("SELECT * FROM campeonato WHERE LOWER(titulo) LIKE $1 AND $2 BETWEEN data_inicio AND data_final", [titulo, data]);
+      const date = new Date(data).toISOString().split('T')[0];
+      const campeonato = await this.pg.manyOrNone("SELECT * FROM campeonato WHERE LOWER(titulo) LIKE $1 AND $2 BETWEEN data_inicio AND data_final", [titulo.toLowerCase(), date]);
       return campeonato;
     } catch (error) {
       throw error;
@@ -60,7 +61,6 @@ export default class CampeonatosRepository {
   async deleteCampeonato(id) {
     try {
       await this.pg.none("DELETE FROM campeonato WHERE id = $1", id);
-      return campeonato;
     }
     catch (error) {
       throw error;

@@ -47,16 +47,19 @@ export const getCampeonatoByTitulo = async (req, res) => {
     try {
         const { titulo } = req.params;
         const { date } = req.query;
-        console.log(date);
-        const campeonato = await campeonatosRepository.getCampeonatoByTitulo(titulo);
-        if (!campeonato) {
-            return res.status(404).send({ message: "Campeonato não encontrado" });
-        }
         if (date) {
             const campeonatoDate = await campeonatosRepository.getCampeonatoByTituloWithDate(titulo, date);
+            if (campeonatoDate.length === 0) {
+                return res.status(404).send({ message: "Campeonato não encontrado" });
+            };
             return res.status(200).send(campeonatoDate);
         }
+        const campeonato = await campeonatosRepository.getCampeonatoByTitulo(titulo);
+        if (campeonato.length === 0) {
+            return res.status(404).send({ message: "Campeonato não encontrado" });
+        }
         return res.status(200).send(campeonato);
+
     } catch (error) {
         return res.status(500).send({ message: "Erro ao buscar campeonato", error: error.message });
     }
@@ -66,6 +69,10 @@ export const updateCampeonato = async (req, res) => {
     try {
         const { id } = req.params;
         const { titulo, data_inicio, data_final } = req.body;
+
+        if (data_final < data_inicio) {
+            return res.status(400).send({ message: "Data final menor que data inicial" });
+        }
 
         const campeonatoVerify = await campeonatosRepository.getCampeonatoById(id);
         if (!campeonatoVerify) {
@@ -84,11 +91,12 @@ export const updateCampeonato = async (req, res) => {
 export const deleteCampeonato = async (req, res) => {
     try {
         const { id } = req.params;
-        const campeonato = await campeonatosRepository.deleteCampeonato(id);
-        if (!campeonato) {
+        const campeonatoVerify = await campeonatosRepository.getCampeonatoById(id);
+        if (!campeonatoVerify) {
             return res.status(404).send({ message: "Campeonato não encontrado" });
         }
-        return res.status(200).send(campeonato);
+        await campeonatosRepository.deleteCampeonato(id);
+        return res.status(200).send({ message: "Campeonato deletado com sucesso", campeonatoVerify });
     } catch (error) {
         return res.status(500).send({ message: "Erro ao deletar campeonato", error: error.message });
     }
@@ -98,11 +106,14 @@ export const getDurationCampeonato = async (req, res) => {
     try {
         const { id } = req.params;
         const campeonato = await campeonatosRepository.getCampeonatoById(id);
+        console.log(campeonato);
+
         if (!campeonato) {
             return res.status(404).send({ message: "Campeonato não encontrado" });
         }
-        const duration = campeonato.getDuration();
-        return res.status(200).send({ duration });
+        const diffInMs = campeonato.data_final - campeonato.data_inicio;
+        const diffInDays = diffInMs / (1000 * 60 * 60 * 24);
+        return res.status(200).send({ diffInDays });
     } catch (error) {
         return res.status(500).send({ message: "Erro ao buscar duração do campeonato", error: error.message });
     }
