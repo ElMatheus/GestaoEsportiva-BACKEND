@@ -78,6 +78,14 @@ export const createUser = async (req, res) => {
     return res.status(500).send({ message: "Erro ao criar usuário", error: error.message });
   }
 };
+
+// faça um post para o insomina com o seguinte json
+// {
+// 	"nome": "admin",
+// 	"senha": "admin",
+// 	"tipo": "admin"
+// }
+
 // atualizar usuario
 export const updateUser = async (req, res) => {
   try {
