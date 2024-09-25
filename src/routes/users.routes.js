@@ -16,7 +16,7 @@ const usersRouter = Router();
 
 usersRouter.get("/", getUsers);
 usersRouter.get("/:id", ensureAuthenticated, getUserById);
-usersRouter.get("/name/:name", getUserByName);
+usersRouter.get("/nome/:nome", getUserByName);
 usersRouter.post("/", createUser);
 
 usersRouter.put("/:id", updateUser);
