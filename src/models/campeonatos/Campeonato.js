@@ -8,5 +8,10 @@ export default class Campeonato {
         this.data_inicio = data_inicio;
         this.data_final = data_final;
     }
+    getDuration() {
+      const diffInMs = this.data_final - this.data_inicio;
+      const diffInDays = diffInMs / (1000 * 60 * 60 * 24);
+      return diffInDays;
+    }
 }
 
