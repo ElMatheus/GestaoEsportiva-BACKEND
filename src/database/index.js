@@ -1,12 +1,10 @@
 import pgp from "pg-promise";
 import { config } from "dotenv";
-
+import fs from "fs";
 import path, { join } from "path";
 import { fileURLToPath } from "url";
 
 config();
-
-
 
 const user = process.env.DB_USER;
 const password = process.env.DB_PASSWORD;
@@ -27,9 +25,19 @@ export function connect() {
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const filePath = join(__dirname, "create-tables.sql");
-const query = new pgp.QueryFile(filePath);
+const createTablesFilePath = join(__dirname, "create-tables.sql");
+const updateTablesFilePath = join(__dirname, "update-tables.sql");
 
-pg.query(query);
+const createTablesQuery = new pgp.QueryFile(createTablesFilePath);
+const updateTablesQuery = new pgp.QueryFile(updateTablesFilePath);
+
+pg.query(createTablesQuery).then(() => {
+    console.log("Tabelas criadas com sucesso.");
+    return pg.query(updateTablesQuery);
+}).then(() => {
+    console.log("Tabelas atualizadas com sucesso.");
+}).catch(error => {
+    console.error("Erro ao criar ou atualizar tabelas:", error);
+});
 
 export default pg;
