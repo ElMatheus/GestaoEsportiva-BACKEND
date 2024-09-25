@@ -57,7 +57,7 @@ export default class UsersRepository {
 
   async getUserByName(nome) {
     try {
-      const user = await this.pg.oneOrNone("SELECT * FROM users WHERE nome = $1", nome);
+      const user = await this.pg.oneOrNone("SELECT * FROM users WHERE LOWER(nome) LIKE $1", nome.toLocaleLowerCase());
       return user;
     } catch (error) {
       throw error;
