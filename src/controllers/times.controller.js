@@ -21,8 +21,16 @@ export const createTimes = async (req, res) => {
 export const getTimes = async (req, res) => {   
     try {
         const times = await timesRepository.getAllTimes();
-        // const joga
+        const jogadores = await timesRepository.getJogadoresPorTime();
 
+        for (let i = 0; i < times.length; i++) {
+            times[i].jogadores = [];
+            for (let j = 0; j < jogadores.length; j++) {
+                if (times[i].id === jogadores[j].id_time) {
+                    times[i].jogadores.push(new Jogador(jogadores[j].id_jogador, jogadores[j].nome_jogador, jogadores[j].sala_jogador));
+                }
+            }
+        }
         res.json({
             status: "success",
             message: "Times listados com sucesso",
@@ -30,6 +38,20 @@ export const getTimes = async (req, res) => {
         })
     } catch (error) {
         return res.status(500).send({ message: "Erro ao buscar times", error: error.message });
+    }
+}
+
+export const getTimesAndJogadores = async (req, res) => {
+    try {
+        const times = await timesRepository.getJogadoresPorTime();
+
+        if (!times) {
+            return res.status(404).send({ message: "Time não encontrado" });
+        }
+
+        return res.status(200).send({ message: "Time encontrado", times });
+    } catch (error) {
+        return res.status(500).send({ message: "Erro ao buscar time", error: error.message });
     }
 }
 

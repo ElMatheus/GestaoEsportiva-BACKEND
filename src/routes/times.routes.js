@@ -3,6 +3,7 @@ import { Router } from "express";
 import {
     createTimes,
     getTimes,
+    getTimesAndJogadores,
     getTimesById,
     updateTimes,
     getTimesByModalidadeID,
@@ -14,6 +15,7 @@ import { ensureAuthenticated } from "../middlewares/ensureAuthenticated.js";
 const timeRouter = Router();
 
 timeRouter.get("/", getTimes);
+timeRouter.get("/jogadores", getTimesAndJogadores);
 timeRouter.get("/:id", getTimesById);
 timeRouter.post("/", createTimes);
 timeRouter.put("/:id", updateTimes);
