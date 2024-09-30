@@ -1,13 +1,13 @@
-DROP TABLE IF EXISTS jogador;
-DROP TABLE IF EXISTS times;
-DROP TABLE IF EXISTS modalidade;
-DROP TABLE IF EXISTS campeonato;
 DROP TABLE IF EXISTS partida;
 DROP TABLE IF EXISTS refresh_token;
 DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS jogador;
+DROP TABLE IF EXISTS times;
+DROP TABLE IF EXISTS campeonato;
+DROP TABLE IF EXISTS modalidade;
 
 CREATE TABLE IF NOT EXISTS campeonato (
-id VARCHAR(100) PRIMARY KEY NOT NULL,
+id VARCHAR(100) PRIMARY KEY UNIQUE NOT NULL,
 titulo VARCHAR(100) NOT NULL,
 data_inicio DATE NOT NULL,
 data_final DATE NOT NULL
@@ -19,8 +19,8 @@ nome_modalidade VARCHAR(100) NOT NULL UNIQUE,
 descricao text,
 limite_pessoas INT NOT NULL,
 campeonato_id VARCHAR(100) NOT NULL,
-valor_por_pessoas INT NOT NULL,
-type BOOLEAN NOT NULL,
+valor_por_pessoa INT NOT NULL,
+tipo BOOLEAN NOT NULL,
 FOREIGN KEY(campeonato_id) REFERENCES campeonato(id)
 );
 
