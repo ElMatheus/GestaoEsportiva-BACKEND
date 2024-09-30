@@ -56,3 +56,17 @@ CREATE TABLE IF NOT EXISTS partida (
     updAtIdUser VARCHAR(100),
     FOREIGN KEY (updAtIdUser) REFERENCES users(id)
 );
+
+CREATE TABLE IF NOT EXISTS confronto (
+    id VARCHAR(36) PRIMARY KEY,
+    idPartida INT NOT NULL,
+    timeId VARCHAR(36) NOT NULL,
+    data DATE NOT NULL,
+    winner BOOLEAN NOT NULL DEFAULT FALSE,
+    tie BOOLEAN NOT NULL DEFAULT FALSE,
+    updAtDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updAtIdUser VARCHAR(100),
+    FOREIGN KEY (idPartida) REFERENCES partida(id),
+    FOREIGN KEY (timeId) REFERENCES times(id),
+    FOREIGN KEY (updAtIdUser) REFERENCES users(id)
+);  
