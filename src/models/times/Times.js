@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 
-export default class User {
+export default class Times {
   constructor(nome, sala, modalidade_id, status, pontos) {
     this.id = uuidv4();
     this.nome = nome;
@@ -9,4 +9,5 @@ export default class User {
     this.status = status,
     this.pontos = pontos;
   }
+
 }

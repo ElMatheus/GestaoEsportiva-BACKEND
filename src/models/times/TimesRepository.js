@@ -1,5 +1,5 @@
 import pg from "../../database/index.js"
-export default class UsersRepository {
+export default class TimesRepository {
     constructor() {
         this.pg = pg;
     };
@@ -14,7 +14,7 @@ export default class UsersRepository {
         }
     }
 
-    async getTimeById(id) {
+    async getTimesById(id) {
         try {
             const time = await this.pg.oneOrNone("SELECT * FROM times WHERE id = $1", id);
             return time;
@@ -25,9 +25,10 @@ export default class UsersRepository {
 
     async createTime(time) {
         try {
-            await this.pg.none("INSERT INTO times (id, nome, modalidade_id, status, pontos) VALUES ($1, $2, $3, $4)", [
+            await this.pg.none("INSERT INTO times (id, nome, sala, modalidade_id, status) VALUES ($1, $2, $3, $4, $5)", [
                 time.id,
                 time.nome,
+                time.sala,
                 time.modalidade_id,
                 time.status,
             ]);
@@ -37,7 +38,7 @@ export default class UsersRepository {
         }
     }
 
-    async updateTime(id, nome, modalidade_id, status, pontos) {
+    async updateTime(id, nome, sala, modalidade_id, status, pontos) {
         try {
             const time = this.getTimeById(id);
 
@@ -46,8 +47,8 @@ export default class UsersRepository {
             }
 
             const updateTime = await this.pg.oneOrNone(
-                "UPDATE times SET nome = $1, modalidade_id = $2, status = $3, pontos = $4 WHERE id = $5 RETURNING *",
-                [nome, modalidade_id, status, pontos, id]
+                "UPDATE times SET nome = $1, sala = $2, modalidade_id = $3, status = $4, pontos = $5 WHERE id = $6 RETURNING *",
+                [nome, sala, modalidade_id, status, pontos, id]
             );
 
             return updateTime;

@@ -9,7 +9,7 @@ export const createTimes = async (req, res) => {
 
         const times = new Times(nome, sala, modalidade_id, status);
 
-        await timesRepository.createTimes(times);
+        await timesRepository.createTime(times);
 
         return res.status(201).send(times);
     } catch (error) {

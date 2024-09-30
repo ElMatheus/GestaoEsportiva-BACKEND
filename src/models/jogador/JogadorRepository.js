@@ -1,5 +1,5 @@
 import pg from "../../database/index.js"
-export default class UsersRepository {
+export default class JogadorRepository {
     constructor() {
         this.pg = pg;
     };

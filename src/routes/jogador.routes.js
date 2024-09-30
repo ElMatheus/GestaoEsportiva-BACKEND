@@ -18,3 +18,5 @@ jogadorRouter.get("/time/:time_id", getJogadorByTimeID);
 jogadorRouter.get("/sala/:sala", getJogadorBySala);
 jogadorRouter.post("/", createJogador);
 jogadorRouter.put("/:id", updateJogador);
+
+export default jogadorRouter;
