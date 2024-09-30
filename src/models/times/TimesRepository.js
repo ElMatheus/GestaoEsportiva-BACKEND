@@ -40,7 +40,7 @@ export default class TimesRepository {
 
     async updateTime(id, nome, sala, modalidade_id, status, pontos) {
         try {
-            const time = this.getTimeById(id);
+            const time = this.getTimesById(id);
 
             if (!time) {
                 return null;
@@ -79,7 +79,7 @@ export default class TimesRepository {
 
     async deleteTime(id) {
         try {
-            const time = this.getTimeById(id);
+            const time = this.getTimesById(id);
 
             if (!time) {
                 return null;
