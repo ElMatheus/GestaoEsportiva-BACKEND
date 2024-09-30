@@ -7,7 +7,7 @@ export default class TimesRepository {
 
     async getAllTimes() {
         try {
-            const allTimes = await this.pg.manyOrNone("SELECT * FROM times");
+            const allTimes = await this.pg.manyOrNone("SELECT times.id AS id_time, times.nome AS nome_time, times.sala AS sala_time, times.modalidade_id AS modalidade_time, times.status AS status_time, times.pontos AS pontos_time, jogadores.id AS id_jogador, jogadores.nome AS nome_jogador, jogadores.sala AS sala_jogador FROM times INNER JOIN jogadores ON times.id = jogadores.time_id");
             return allTimes;
         } catch (error) {
             throw error;
@@ -59,7 +59,7 @@ export default class TimesRepository {
 
     async getTimeByModalidadeID(modalidade_id) {
         try {
-            const time = await this.pg.oneOrNone("SELECT * FROM times WHERE LOWER(modalidade_id) LIKE $1", modalidade_id.toLocaleLowerCase());
+            const time = await this.pg.manyOrNone("SELECT * FROM times WHERE LOWER(modalidade_id) LIKE $1", modalidade_id.toLocaleLowerCase());
             return time;
         } catch (error) {
             throw error;
@@ -69,8 +69,17 @@ export default class TimesRepository {
 
     async getTimeBySala(sala) {
         try {
-            const time = await this.pg.oneOrNone("SELECT * FROM times WHERE LOWER(sala) LIKE $1", sala.toLocaleLowerCase());
+            const time = await this.pg.manyOrNone("SELECT * FROM times WHERE LOWER(sala) LIKE $1", sala.toLocaleLowerCase());
             return time;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async getJogadoresByTimeID(time_id) {
+        try {
+            const jogador = await this.pg.manyOrNone("SELECT * FROM jogadores WHERE time_id = $1", time_id);
+            return jogador;
         } catch (error) {
             throw error;
         }
