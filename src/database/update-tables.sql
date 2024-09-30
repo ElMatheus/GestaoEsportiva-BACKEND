@@ -1,10 +1,12 @@
-DROP TABLE IF EXISTS partida;
-DROP TABLE IF EXISTS refresh_token;
-DROP TABLE IF EXISTS users;
-DROP TABLE IF EXISTS jogador;
-DROP TABLE IF EXISTS times;
+-- faça o drop das tabelas antes de rodar esse script
 DROP TABLE IF EXISTS campeonato;
 DROP TABLE IF EXISTS modalidade;
+DROP TABLE IF EXISTS times;
+DROP TABLE IF EXISTS jogadores;
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS refresh_token;
+DROP TABLE IF EXISTS partida;
+
 
 CREATE TABLE IF NOT EXISTS campeonato (
 id VARCHAR(100) PRIMARY KEY UNIQUE NOT NULL,

@@ -1,22 +1,22 @@
 import { Router } from "express";
 
 import {
-    createTime,
+    createTimes,
     getTimes,
-    getTimeById,
-    updateTime,
+    getTimesById,
+    updateTimes,
     getTimesByModalidadeID,
     getTimesBySala,
-    deleteTime
-} from "../controllers/time.controller.js";
+    deleteTimes
+} from "../controllers/times.controller.js";
 import { ensureAuthenticated } from "../middlewares/ensureAuthenticated.js";
 
 const timeRouter = Router();
 
 timeRouter.get("/", getTimes);
-timeRouter.get("/:id", ensureAuthenticated, getTimeById);
-timeRouter.post("/", createTime);
-timeRouter.put("/:id", updateTime);
+timeRouter.get("/:id", ensureAuthenticated, getTimesById);
+timeRouter.post("/", createTimes);
+timeRouter.put("/:id", updateTimes);
 timeRouter.get("/modalidade/:modalidade_id", getTimesByModalidadeID);
 timeRouter.get("/sala/:sala", getTimesBySala);
-timeRouter.delete("/:id", deleteTime);
+timeRouter.delete("/:id", deleteTimes);
