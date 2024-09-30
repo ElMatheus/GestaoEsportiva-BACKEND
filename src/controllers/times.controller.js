@@ -48,7 +48,7 @@ export const updateTimes = async (req, res) => {
         const { id } = req.params;
         const { nome, sala, modalidade_id, status, pontos } = req.body;
 
-        const times = await timesRepository.updateTimes(id, nome, sala, modalidade_id, status, pontos);
+        const times = await timesRepository.updateTime(id, nome, sala, modalidade_id, status, pontos);
 
         if (!times) {
             return res.status(404).send({ message: "Time não encontrado" });
@@ -64,7 +64,7 @@ export const getTimesByModalidadeID = async (req, res) => {
     try {
         const { modalidade_id } = req.params;
 
-        const times = await timesRepository.getTimesByModalidadeID(modalidade_id);
+        const times = await timesRepository.getTimeByModalidadeID(modalidade_id);
 
         return res.status(200).send(times);
     } catch (error) {
@@ -76,7 +76,7 @@ export const getTimesBySala = async (req, res) => {
     try {
         const { sala } = req.params;
 
-        const times = await timesRepository.getTimesBySala(sala);
+        const times = await timesRepository.getTimeBySala(sala);
 
         return res.status(200).send(times);
     } catch (error) {
