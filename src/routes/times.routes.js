@@ -14,7 +14,7 @@ import { ensureAuthenticated } from "../middlewares/ensureAuthenticated.js";
 const timeRouter = Router();
 
 timeRouter.get("/", getTimes);
-timeRouter.get("/:id", ensureAuthenticated, getTimesById);
+timeRouter.get("/:id", getTimesById);
 timeRouter.post("/", createTimes);
 timeRouter.put("/:id", updateTimes);
 timeRouter.get("/modalidade/:modalidade_id", getTimesByModalidadeID);

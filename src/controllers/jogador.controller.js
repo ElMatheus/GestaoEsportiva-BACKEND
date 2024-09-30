@@ -1,4 +1,4 @@
-import Jogador from '../models/jogador/JogadorRepository.js';
+import Jogador from '../models/jogador/Jogador.js';
 import JogadorRepository from '../models/jogador/JogadorRepository.js';
 
 const jogadorRepository = new JogadorRepository();
@@ -16,6 +16,7 @@ export const createJogador = async (req, res) => {
         return res.status(500).send({ message: "Erro ao criar jogador", error: error.message });
     }
 }
+//faça uma query de create para o insomina 
 
 export const getJogadores = async (req, res) => {
     try {

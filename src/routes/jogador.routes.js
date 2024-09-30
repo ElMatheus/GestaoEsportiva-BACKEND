@@ -13,7 +13,7 @@ import { ensureAuthenticated } from "../middlewares/ensureAuthenticated.js";
 const jogadorRouter = Router();
 
 jogadorRouter.get("/", getJogadores);
-jogadorRouter.get("/:id", ensureAuthenticated, getJogadorById);
+jogadorRouter.get("/:id", getJogadorById);
 jogadorRouter.get("/time/:time_id", getJogadorByTimeID);
 jogadorRouter.get("/sala/:sala", getJogadorBySala);
 jogadorRouter.post("/", createJogador);
