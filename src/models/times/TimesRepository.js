@@ -19,7 +19,7 @@ export default class TimesRepository {
             const jogadoresPorTime = await this.pg.manyOrNone(`
                 SELECT 
                     times.id AS id_time, 
-                    times.nome AS nome_time, 
+                     times.nome AS nome_time,
                     jogadores.id AS id_jogador, 
                     jogadores.nome AS nome_jogador, 
                     jogadores.sala AS sala_jogador 

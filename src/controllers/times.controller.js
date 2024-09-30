@@ -1,4 +1,5 @@
 import Jogador from '../models/jogador/Jogador.js';
+import Jogado2 from '../models/jogador/bdskbkd.js';
 import Times from '../models/times/Times.js';
 import TimesRepository from '../models/times/TimesRepository.js';
 
@@ -26,8 +27,8 @@ export const getTimes = async (req, res) => {
         for (let i = 0; i < times.length; i++) {
             times[i].jogadores = [];
             for (let j = 0; j < jogadores.length; j++) {
-                if (times[i].id === jogadores[j].id_time) {
-                    times[i].jogadores.push(new Jogador(jogadores[j].id_jogador, jogadores[j].nome_jogador, jogadores[j].sala_jogador));
+                if (times[i].id == jogadores[j].id_time) {
+                    times[i].jogadores.push(new Jogado2(jogadores[j].id_jogador,jogadores[j].nome_jogador, jogadores[j].sala_jogador, jogadores[j].id_time));
                 }
             }
         }
