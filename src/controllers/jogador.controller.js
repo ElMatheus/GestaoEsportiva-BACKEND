@@ -22,7 +22,11 @@ export const getJogadores = async (req, res) => {
     try {
         const jogadores = await jogadorRepository.getAllJogadores();
 
-        return res.status(200).send(jogadores);
+        res.json({
+            status: "success",
+            message: "Jogadores listados com sucesso",
+            data: jogadores
+        })
     } catch (error) {
         return res.status(500).send({ message: "Erro ao buscar jogadores", error: error.message });
     }

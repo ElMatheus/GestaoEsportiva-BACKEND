@@ -1,3 +1,4 @@
+import Jogador from '../models/jogador/Jogador.js';
 import Times from '../models/times/Times.js';
 import TimesRepository from '../models/times/TimesRepository.js';
 
@@ -20,8 +21,13 @@ export const createTimes = async (req, res) => {
 export const getTimes = async (req, res) => {
     try {
         const times = await timesRepository.getAllTimes();
+        const joga
 
-        return res.status(200).send(times);
+        res.json({
+            status: "success",
+            message: "Times listados com sucesso",
+            data: times
+        })
     } catch (error) {
         return res.status(500).send({ message: "Erro ao buscar times", error: error.message });
     }
