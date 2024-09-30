@@ -1,19 +1,18 @@
 -- faça o drop das tabelas antes de rodar esse script
-DROP TABLE IF EXISTS campeonato;
-DROP TABLE IF EXISTS modalidade;
-DROP TABLE IF EXISTS times;
-DROP TABLE IF EXISTS jogadores;
-DROP TABLE IF EXISTS users;
-DROP TABLE IF EXISTS refresh_token;
 DROP TABLE IF EXISTS partida;
-
+DROP TABLE IF EXISTS refresh_token;
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS jogador;
+DROP TABLE IF EXISTS times;
+DROP TABLE IF EXISTS modalidade;
+DROP TABLE IF EXISTS campeonato;
 
 CREATE TABLE IF NOT EXISTS campeonato (
 id VARCHAR(100) PRIMARY KEY UNIQUE NOT NULL,
 titulo VARCHAR(100) NOT NULL,
 data_inicio DATE NOT NULL,
 data_final DATE NOT NULL
-);
+);  
 
 CREATE TABLE IF NOT EXISTS modalidade (
 id VARCHAR(100) PRIMARY KEY NOT NULL,

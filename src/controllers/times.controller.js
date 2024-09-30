@@ -18,10 +18,10 @@ export const createTimes = async (req, res) => {
     }
 }
 
-export const getTimes = async (req, res) => {
+export const getTimes = async (req, res) => {   
     try {
         const times = await timesRepository.getAllTimes();
-        const joga
+        // const joga
 
         res.json({
             status: "success",
