@@ -1,9 +1,12 @@
 {
-  "name": "node-tds-2023-alunos",
+  "name": "tds-2023-alunos",
   "version": "1.0.0",
   "description": "Projeto de ensino para o curso técnico em Desenvolvimento de Sistemas SENAI - Valinhos",
   "main": "src/server.js",
-  "repository": "https://github.com/FelipeSantos92Dev/node-tds-2023-instrutor",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FelipeSantos92Dev/node-tds-2023-instrutor.git"
+  },
   "author": "Felipe Santos <dev.felipesantos@gmail.com>",
   "private": false,
   "type": "module",
@@ -18,11 +21,16 @@
   "dependencies": {
     "bcrypt": "^5.1.1",
     "dayjs": "^1.11.11",
-    "dotenv": "^16.3.1",
-    "express": "^4.18.2",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
     "jsonwebtoken": "^9.0.2",
-    "nodemon": "^3.0.1",
+    "nodemon": "^3.1.7",
     "pg-promise": "^11.6.0",
     "uuid": "^9.0.1"
-  }
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/FelipeSantos92Dev/node-tds-2023-instrutor/issues"
+  },
+  "homepage": "https://github.com/FelipeSantos92Dev/node-tds-2023-instrutor#readme"
 }
