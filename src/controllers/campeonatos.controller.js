@@ -57,7 +57,23 @@ export const getCampeonatoById = async (req, res) => {
         if (!campeonato) {
             return res.status(404).send({ message: "Campeonato não encontrado" });
         }
-        return res.status(200).send(campeonato);
+        const campeonatosModalidades = campeonatos.map(campeonato => {
+            campeonato.modalidades = modalidades.filter(modalidade => modalidade.campeonato_id == campeonato.id).map(modalidade => ({
+                id: modalidade.id,
+                nome_modalidade: modalidade.nome_modalidade,
+                tipo: modalidade.tipo,
+                campeonato_id: modalidade.campeonato_id
+            }));
+
+            return campeonato;
+        }
+    );
+
+    return res.json({
+        status: "success",
+        message: "Campeonatos listados com sucesso",
+        data: campeonatosModalidades
+    });
     } catch (error) {
         return res.status(500).send({ message: "Erro ao buscar campeonato", error: error.message });
     }
