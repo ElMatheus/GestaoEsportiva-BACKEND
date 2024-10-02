@@ -24,19 +24,22 @@ export const getTimes = async (req, res) => {
         const times = await timesRepository.getAllTimes();
         const jogadores = await timesRepository.getJogadoresPorTime();
 
-        for (let i = 0; i < times.length; i++) {
-            times[i].jogadores = [];
-            for (let j = 0; j < jogadores.length; j++) {
-                if (times[i].id == jogadores[j].id_time) {
-                    times[i].jogadores.push(new Jogado2(jogadores[j].id_jogador, jogadores[j].nome_jogador, jogadores[j].sala_jogador, jogadores[j].id_time));
-                }
-            }
+        const timesJogadores = times.map(time => {
+            time.jogadores = jogadores.filter(jogador => jogador.id_time === time.id).map(jogador => ({
+                id: jogador.id_jogador,
+                nome: jogador.nome_jogador,
+                sala: jogador.sala_jogador,
+                id_time: jogador.id_time
+            }));
+
+            return time;
         }
+        );
         return res.json({
             status: "success",
             message: "Times listados com sucesso",
-            total: times.length,
-            data: times
+            total: timesJogadores.length,
+            data: timesJogadores
         })
     } catch (error) {
         return res.status(500).send({ message: "Erro ao buscar times", error: error.message });
@@ -61,15 +64,27 @@ export const getTimesById = async (req, res) => {
     try {
         const { id } = req.params;
 
-        const times = await timesRepository.getTimesById(id);
+        const time = await timesRepository.getTimesById(id);
+        const jogadores = await timesRepository.getJogadoresPorTime(id);
 
-        if (!times) {
+        if (!time) {
             return res.status(404).send({ message: "Time não encontrado" });
         }
 
-        return res.status(200).send({ message: "Time encontrado", times });
+        time.jogadores = jogadores.map(jogador => ({
+            id: jogador.id_jogador,
+            nome: jogador.nome_jogador,
+            sala: jogador.sala_jogador,
+            id_time: jogador.id_time
+        }));
+
+        return res.json({
+            status: "success",
+            message: "Time listado com sucesso",
+            data: time
+        });
     } catch (error) {
-        return res.status(500).send({ message: "Erro ao buscar time", error: error.message });
+        return res.status(500).send({ message: "Erro ao buscar time e jogadores", error: error.message });
     }
 }
 
