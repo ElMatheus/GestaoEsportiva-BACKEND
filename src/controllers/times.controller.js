@@ -69,22 +69,17 @@ export const getTimesById = async (req, res) => {
             return res.status(404).send({ message: "Time não encontrado" });
         }
 
-        const timesJogadores = times.map(time => {
-            time.jogadores = jogadores.filter(jogador => jogador.id_time == time.id).map(jogador => ({
-                id: jogador.id_jogador,
-                nome: jogador.nome_jogador,
-                sala: jogador.sala_jogador,
-                id_time: jogador.id_time
-            }));
-
-            return time;
-        }
-        );
+        time.jogadores = jogadores.map(jogador => ({
+            id: jogador.id_jogador,
+            nome: jogador.nome_jogador,
+            sala: jogador.sala_jogador,
+            id_time: jogador.id_time
+        }));
 
         return res.json({
             status: "success",
             message: "Time listado com sucesso",
-            data: timesJogadores
+            data: time
         });
     } catch (error) {
         return res.status(500).send({ message: "Erro ao buscar time e jogadores", error: error.message });
