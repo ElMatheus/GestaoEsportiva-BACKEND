@@ -1,6 +1,6 @@
 import pg from "../../database/index.js"
 export default class CampeonatosRepository {
-  constructor() { 
+  constructor() {
     this.pg = pg;
   };
   async getCampeonatos() {
@@ -9,8 +9,31 @@ export default class CampeonatosRepository {
       return allCampeonatos;
     } catch (error) {
       throw error;
-    } 
-   }
+    }
+  }
+  async getCampeonatosModalidades() {
+    try {
+      const jogadoresPorTime = await this.pg.manyOrNone(`
+            SELECT
+                campeonato.id AS id_campeonato,
+                campeonato.titulo AS titulo_campeonato,
+                modalidade.id AS id,
+                modalidade.nome_modalidade AS nome_modalidade,
+                modalidade.tipo AS tipo,
+                modalidade.campeonato_id AS campeonato_id
+            FROM
+                campeonato
+            INNER JOIN
+                modalidade
+            ON
+                campeonato.id = modalidade.campeonato_id
+
+        `);
+      return jogadoresPorTime;
+    } catch (error) {
+      throw error;
+    }
+  }
   async getCampeonatoById(id) {
     try {
       const campeonato = await this.pg.oneOrNone("SELECT * FROM campeonato WHERE id = $1", id);
@@ -67,4 +90,3 @@ export default class CampeonatosRepository {
     }
   }
 }
-  

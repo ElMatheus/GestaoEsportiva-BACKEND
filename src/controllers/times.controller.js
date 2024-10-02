@@ -1,5 +1,3 @@
-import Jogador from '../models/jogador/Jogador.js';
-import Jogado2 from '../models/jogador/bdskbkd.js';
 import Times from '../models/times/Times.js';
 import TimesRepository from '../models/times/TimesRepository.js';
 
@@ -71,17 +69,22 @@ export const getTimesById = async (req, res) => {
             return res.status(404).send({ message: "Time não encontrado" });
         }
 
-        time.jogadores = jogadores.map(jogador => ({
-            id: jogador.id_jogador,
-            nome: jogador.nome_jogador,
-            sala: jogador.sala_jogador,
-            id_time: jogador.id_time
-        }));
+        const timesJogadores = times.map(time => {
+            time.jogadores = jogadores.filter(jogador => jogador.id_time == time.id).map(jogador => ({
+                id: jogador.id_jogador,
+                nome: jogador.nome_jogador,
+                sala: jogador.sala_jogador,
+                id_time: jogador.id_time
+            }));
+
+            return time;
+        }
+        );
 
         return res.json({
             status: "success",
             message: "Time listado com sucesso",
-            data: time
+            data: timesJogadores
         });
     } catch (error) {
         return res.status(500).send({ message: "Erro ao buscar time e jogadores", error: error.message });
@@ -111,10 +114,7 @@ export const getTimesByModalidadeID = async (req, res) => {
 
         const times = await timesRepository.getTimeByModalidadeID(modalidade_id);
 
-        // if (!times) {
-        //     return res.status(404).send({ message: "Time não encontrado" });
-        // }
-
+ 
         return res.status(200).send(times);
     } catch (error) {
         return res.status(500).send({ message: "Erro ao buscar time", error: error.message });

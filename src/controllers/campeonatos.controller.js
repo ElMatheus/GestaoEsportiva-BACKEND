@@ -24,7 +24,27 @@ export const createCampeonato = async (req, res) => {
 export const getCampeonatos = async (req, res) => {
     try {
         const campeonatos = await campeonatosRepository.getCampeonatos();
-        return res.status(200).send({ total: campeonatos.length, campeonatos });
+        const modalidades = await campeonatosRepository.getCampeonatosModalidades();
+
+        const campeonatosModalidades = campeonatos.map(campeonato => {
+            campeonato.modalidades = modalidades.filter(modalidade => modalidade.campeonato_id == campeonato.id).map(modalidade => ({
+                id: modalidade.id,
+                nome_modalidade: modalidade.nome_modalidade,
+                tipo: modalidade.tipo,
+                campeonato_id: modalidade.campeonato_id
+            }));
+
+            return campeonato;
+        }
+    );
+
+
+        return res.json({
+            status: "success",
+            message: "Campeonatos listados com sucesso",
+            total: campeonatosModalidades.length,
+            data: campeonatosModalidades
+        });
     } catch (error) {
         return res.status(500).send({ message: "Erro ao buscar campeonatos", error: error.message });
     }
