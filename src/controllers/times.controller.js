@@ -35,6 +35,7 @@ export const getTimes = async (req, res) => {
         return res.json({
             status: "success",
             message: "Times listados com sucesso",
+            total: times.length,
             data: times
         })
     } catch (error) {

@@ -21,7 +21,7 @@ export const getUsers = async (req, res) => {
       status: "success",
       message: "Usuários listados com sucesso",
       total: users.length,
-      data: users,
+      data: users
     })
   } catch (error) {
     return res.status(500).send({ message: "Erro ao buscar usuários", error: error.message });

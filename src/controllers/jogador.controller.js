@@ -14,7 +14,6 @@ export const createJogador = async (req, res) => {
         return res.json({
             status: "success",
             message: "Jogador criado com sucesso",
-            total: jogador.length,
             data: jogador
         })
     } catch (error) {
@@ -30,6 +29,7 @@ export const getJogadores = async (req, res) => {
         res.json({
             status: "success",
             message: "Jogadores listados com sucesso",
+            total: jogadores.length,
             data: jogadores
         })
     } catch (error) {
