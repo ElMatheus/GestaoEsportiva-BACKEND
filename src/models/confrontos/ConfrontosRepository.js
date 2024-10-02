@@ -30,7 +30,8 @@ export default class ConfrontosRepository {
     };
     async createConfronto(confronto) {
         try {
-            await this.pg.none("INSERT INTO confronto (id, idPartida, timeId, data, winner, tie, updAtDate, updAtIdUser) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)", [confronto.id ,confronto.idPartida, confronto.timeId, confronto.data, confronto.winner, confronto.tie, confronto.updAtDate, confronto.updAtIdUser]);
+            console.log(confronto.updAtDate);
+            await this.pg.none("INSERT INTO confronto (id, idPartida, timeId, winner, tie, updAtDate, updAtIdUser) VALUES ($1, $2, $3, $4, $5, $6, $7)", [confronto.id ,confronto.idPartida, confronto.timeId, confronto.winner, confronto.tie, confronto.updAtDate, confronto.updAtIdUser]);
         } catch (error) {
             throw error;
         }
