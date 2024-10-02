@@ -19,7 +19,7 @@ export const createTimes = async (req, res) => {
     }
 }
 
-export const getTimes = async (req, res) => {   
+export const getTimes = async (req, res) => {
     try {
         const times = await timesRepository.getAllTimes();
         const jogadores = await timesRepository.getJogadoresPorTime();
@@ -28,11 +28,11 @@ export const getTimes = async (req, res) => {
             times[i].jogadores = [];
             for (let j = 0; j < jogadores.length; j++) {
                 if (times[i].id == jogadores[j].id_time) {
-                    times[i].jogadores.push(new Jogado2(jogadores[j].id_jogador,jogadores[j].nome_jogador, jogadores[j].sala_jogador, jogadores[j].id_time));
+                    times[i].jogadores.push(new Jogado2(jogadores[j].id_jogador, jogadores[j].nome_jogador, jogadores[j].sala_jogador, jogadores[j].id_time));
                 }
             }
         }
-        res.json({
+        return res.json({
             status: "success",
             message: "Times listados com sucesso",
             data: times
