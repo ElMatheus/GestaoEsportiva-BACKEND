@@ -1,9 +1,10 @@
 -- faça o drop das tabelas antes de rodar esse script
-DROP TABLE IF EXISTS partida;
 DROP TABLE IF EXISTS refresh_token;
+DROP TABLE IF EXISTS confronto;
+DROP TABLE IF EXISTS partida;
+DROP TABLE IF EXISTS jogadores;
+DROP TABLE IF EXISTS times; 
 DROP TABLE IF EXISTS users;
-DROP TABLE IF EXISTS jogador;
-DROP TABLE IF EXISTS times;
 DROP TABLE IF EXISTS modalidade;
 DROP TABLE IF EXISTS campeonato;
 
@@ -12,7 +13,7 @@ id VARCHAR(100) PRIMARY KEY UNIQUE NOT NULL,
 titulo VARCHAR(100) NOT NULL,
 data_inicio DATE NOT NULL,
 data_final DATE NOT NULL
-);  
+);
 
 CREATE TABLE IF NOT EXISTS modalidade (
 id VARCHAR(100) PRIMARY KEY NOT NULL,
@@ -65,3 +66,16 @@ CREATE TABLE IF NOT EXISTS partida (
     updAtIdUser VARCHAR(100),
     FOREIGN KEY (updAtIdUser) REFERENCES users(id)
 );
+
+CREATE TABLE IF NOT EXISTS confronto (
+    id VARCHAR(36) PRIMARY KEY,
+    idPartida INT NOT NULL,
+    timeId VARCHAR(36) NOT NULL,
+    winner BOOLEAN DEFAULT FALSE,
+    tie BOOLEAN DEFAULT FALSE,
+    updAtDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updAtIdUser VARCHAR(100),
+    FOREIGN KEY (idPartida) REFERENCES partida(id),
+    FOREIGN KEY (timeId) REFERENCES times(id),
+    FOREIGN KEY (updAtIdUser) REFERENCES users(id)
+);  

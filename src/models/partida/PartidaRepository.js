@@ -4,6 +4,11 @@ export default class PartidaRepository {
     this.pg = pg;
   };
 
+  async getPartidas() {
+    const partidas = await this.pg.manyOrNone("SELECT * FROM partida");
+    return partidas;
+  };
+
   async createPartida(partida) {
     await this.pg.none("INSERT INTO partida (data, anotacao, updAtDate, updAtIdUser) VALUES ($1, $2, $3, $4)", [
       partida.data,

@@ -4,6 +4,8 @@ import campeonatosRouter from "./campeonatos.routes.js";
 import modalidadesRouter from "./modalidades.routes.js";
 import timeRouter from "./times.routes.js"
 import jogadorRouter from "./jogador.routes.js"
+import confrontosRouter from "./confrontos.routes.js"
+import partidasRouter from "./partidas.routes.js"
 
 const router = Router();
 
@@ -13,6 +15,8 @@ router.get("/", (req, res) => {
 
 router.use("/users", usersRouter);
 router.use("/campeonatos", campeonatosRouter);
+router.use("/partidas", partidasRouter);
+router.use("/confrontos", confrontosRouter);
 router.use("/modalidades", modalidadesRouter);
 router.use("/times", timeRouter);
 router.use("/jogadores", jogadorRouter);

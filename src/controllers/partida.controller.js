@@ -1,5 +1,17 @@
-import Partida from "../models/partida/Partida";
-import partidasRepository from "../models/partida/PartidaRepository";
+import Partida from "../models/partida/Partida.js";
+import PartidaRepository from "../models/partida/PartidaRepository.js";
+
+const partidasRepository = new PartidaRepository();
+
+export const getPartidas = async (req, res) => {
+    try {
+        const partidas = await partidasRepository.getPartidas();
+
+        return res.status(200).send(partidas);
+    } catch (error) {
+        return res.status(500).send({ message: "Erro ao buscar partidas", error: error.message });
+    }
+};
 
 export const createPartida = async (req, res) => {
     try {

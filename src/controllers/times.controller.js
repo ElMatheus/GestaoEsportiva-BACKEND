@@ -23,11 +23,7 @@ export const getTimes = async (req, res) => {
         const times = await timesRepository.getAllTimes();
         // const joga
 
-        res.json({
-            status: "success",
-            message: "Times listados com sucesso",
-            data: times
-        })
+        return res.status(200).send(times);
     } catch (error) {
         return res.status(500).send({ message: "Erro ao buscar times", error: error.message });
     }

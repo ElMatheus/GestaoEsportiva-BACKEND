@@ -7,7 +7,7 @@ export default class TimesRepository {
 
     async getAllTimes() {
         try {
-            const allTimes = await this.pg.manyOrNone("SELECT times.id AS id_time, times.nome AS nome_time, times.sala AS sala_time, times.modalidade_id AS modalidade_time, times.status AS status_time, times.pontos AS pontos_time, jogadores.id AS id_jogador, jogadores.nome AS nome_jogador, jogadores.sala AS sala_jogador FROM times INNER JOIN jogadores ON times.id = jogadores.time_id");
+            const allTimes = await this.pg.manyOrNone("SELECT * FROM times");
             return allTimes;
         } catch (error) {
             throw error;
