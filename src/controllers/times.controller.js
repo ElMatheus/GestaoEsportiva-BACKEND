@@ -25,7 +25,7 @@ export const getTimes = async (req, res) => {
         const jogadores = await timesRepository.getJogadoresPorTime();
 
         const timesJogadores = times.map(time => {
-            time.jogadores = jogadores.filter(jogador => jogador.id_time === time.id).map(jogador => ({
+            time.jogadores = jogadores.filter(jogador => jogador.id_time == time.id).map(jogador => ({
                 id: jogador.id_jogador,
                 nome: jogador.nome_jogador,
                 sala: jogador.sala_jogador,
