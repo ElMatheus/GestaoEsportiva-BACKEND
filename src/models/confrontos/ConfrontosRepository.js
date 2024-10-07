@@ -32,7 +32,7 @@ export default class ConfrontosRepository {
     async getPartidaByConfrontos() {
         try {
             const PartidaPorConfronto = await this.pg.manyOrNone(
-                "SELECT confronto.id, partida.id , partida.data, partida.anotacao FROM confronto INNER JOIN partida ON partida.id = confronto.idPartida"
+                "SELECT confronto.id, partida.id, time.id, partida.data, partida.anotacao FROM confronto INNER JOIN partida ON partida.id = confronto.idPartida"
             )
         } catch (error) {
             throw error;
