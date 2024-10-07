@@ -11,6 +11,32 @@ export default class ModalidadesRepository {
       throw error;
     }
   }
+
+  async getTimesByModalidade() {
+    try {
+      const timesByModalidade = await this.pg.manyOrNone(`
+                SELECT
+                    modalidade.id AS id_modalidade,
+                    modalidade.nome_modalidade AS nome_modalidade,
+                    times.id AS id_time,
+                    times.nome AS nome_time,
+                    times.sala,
+                    times.modalidade_id AS id_modalidade,
+                    times.status,
+                    times.pontos,
+                FROM
+                    modalidade
+                INNER JOIN
+                    times
+                ON
+                    modalidade.id = times.modalidade_id
+            `);
+      return timesByModalidade;
+    } catch (error) {
+      throw error;
+    }
+  }
+
   async getModalidadeById(id) {
     try {
       const modalidade = await this.pg.oneOrNone("SELECT * FROM modalidade WHERE id = $1", id);

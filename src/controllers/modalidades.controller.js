@@ -23,6 +23,7 @@ export const getModalidades = async (req, res) => {
   }
 }
 
+
 export const getModalidadeById = async (req, res) => {
   try {
     const { id } = req.params;
