@@ -17,7 +17,28 @@ export const createModalidade = async (req, res) => {
 export const getModalidades = async (req, res) => {
   try {
     const modalidades = await modalidadeRepository.getModalidades();
-    return res.status(200).send({ total: modalidades.length, modalidades });
+    const times = await modalidadeRepository.getTimesByModalidade();
+
+    const modalidadesTimes = modalidades.map(modalidade => {
+      modalidade.times = times.filter(time => time.id_modalidade == modalidade.id_modalidade).map(time => ({
+        id: time.id_time,
+        nome: time.nome_time,
+        sala: time.sala,
+        id_modalidade: time.id_modalidade_in_time,
+        status: time.status,
+        pontos: time.pontos
+      }));
+
+      return modalidade;
+    }
+    );
+
+    return res.json({
+      status: "success",
+      message: "Modalidades listadas com sucesso",
+      total: modalidadesTimes.length,
+      data: modalidadesTimes
+    })
   } catch (error) {
     return res.status(500).send({ message: "Erro ao buscar modalidades", error: error.message });
   }
@@ -28,10 +49,25 @@ export const getModalidadeById = async (req, res) => {
   try {
     const { id } = req.params;
     const modalidade = await modalidadeRepository.getModalidadeById(id);
+    const times = await modalidadeRepository.getTimesByModalidade();
     if (!modalidade) {
       return res.status(404).send({ message: "Modalidade não encontrada" });
     }
-    return res.status(200).send(modalidade);
+
+    modalidade.times = times.filter(time => time.id_modalidade == modalidade.id).map(time => ({
+      id: time.id_time,
+      nome: time.nome_time,
+      sala: time.sala,
+      id_modalidade: time.id_modalidade_in_time,
+      status: time.status,
+      pontos: time.pontos
+    }));
+
+    return res.json({
+      status: "success",
+      message: "Time listado com sucesso",
+      data: modalidade
+    })
   }
   catch (error) {
     return res.status(500).send({ message: "Erro ao buscar modalidade", error: error.message });

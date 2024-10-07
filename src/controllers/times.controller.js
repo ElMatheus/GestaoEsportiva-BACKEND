@@ -1,5 +1,3 @@
-import Jogador from '../models/jogador/Jogador.js';
-import Jogado2 from '../models/jogador/bdskbkd.js';
 import Times from '../models/times/Times.js';
 import TimesRepository from '../models/times/TimesRepository.js';
 
