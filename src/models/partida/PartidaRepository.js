@@ -4,6 +4,11 @@ export default class PartidaRepository {
     this.pg = pg;
   };
 
+  async getPartidas() {
+    const partidas = await this.pg.manyOrNone("SELECT * FROM partida");
+    return partidas;
+  };
+
   async createPartida(partida) {
     await this.pg.none("INSERT INTO partida (data, anotacao, updAtDate, updAtIdUser) VALUES ($1, $2, $3, $4)", [
       partida.data,
@@ -19,6 +24,11 @@ export default class PartidaRepository {
     return partida;
   };
 
+  async getPartidaByData(data) {
+    const partida = await this.pg.oneOrNone("SELECT * FROM partida WHERE data = $1", data);
+    return partida;
+  };
+
   async updatePartida(id, partida) {
     await this.pg.none("UPDATE partida SET data = $1, anotacao = $2, updAtDate = $3, updAtIdUser = $4 WHERE id = $5", [
       partida.data,
@@ -28,5 +38,9 @@ export default class PartidaRepository {
       id
     ]);
     return partida;
+  };
+
+  async deletePartida(id) {
+    await this.pg.none("DELETE FROM partida WHERE id = $1", id);
   };
 };

@@ -1,5 +1,28 @@
-import Partida from "../models/partida/Partida";
-import partidasRepository from "../models/partida/PartidaRepository";
+import Partida from "../models/partida/Partida.js";
+import PartidaRepository from "../models/partida/PartidaRepository.js";
+
+const partidasRepository = new PartidaRepository();
+
+export const getPartidas = async (req, res) => {
+    try {
+        const partidas = await partidasRepository.getPartidas();
+        const { data } = req.query;
+
+        if (data) {
+            const partida = await partidasRepository.getPartidaByData(data);
+
+            if (!partida) {
+                return res.status(404).send({ message: "Partida não encontrada" });
+            }
+
+            return res.status(200).send(partida);
+        }
+
+        return res.status(200).send(partidas);
+    } catch (error) {
+        return res.status(500).send({ message: "Erro ao buscar partidas", error: error.message });
+    }
+};
 
 export const createPartida = async (req, res) => {
     try {
@@ -43,5 +66,23 @@ export const updatePartida = async (req, res) => {
         return res.status(200).send(partida);
     } catch (error) {
         return res.status(500).send({ message: "Erro ao atualizar partida", error: error.message });
+    }
+};
+
+export const deletePartida = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const partida = await partidasRepository.getPartidaById(id);
+
+        if (!partida) {
+            return res.status(404).send({ message: "Partida não encontrada" });
+        }
+
+        await partidasRepository.deletePartida(id);
+
+        return res.status(200).send({ message: "Partida deletada com sucesso" });
+    } catch (error) {
+        return res.status(500).send({ message: "Erro ao deletar partida", error: error.message });
     }
 };
