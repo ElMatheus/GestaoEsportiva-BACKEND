@@ -82,6 +82,7 @@ export const updateConfronto = async (req, res) => {
 
         await confrontoRepository.updateConfronto(confrontoObj, id);
 
+        
         return res.status(200).send(confrontoObj);
     } catch (error) {
         return res.status(500).send({ message: "Erro ao atualizar confronto", error: error.message });
