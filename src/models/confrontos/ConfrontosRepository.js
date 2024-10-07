@@ -28,6 +28,17 @@ export default class ConfrontosRepository {
             throw error;
         }
     };
+
+    async getPartidaByConfrontos() {
+        try {
+            const PartidaPorConfronto = await this.pg.manyOrNone(
+                "SELECT confronto.id, partida.id, time.id, partida.data, partida.anotacao FROM confronto INNER JOIN partida ON partida.id = confronto.idPartida"
+            )
+        } catch (error) {
+            throw error;
+        }
+    };
+
     async createConfronto(confronto) {
         try {
             await this.pg.none("INSERT INTO confronto (id, idPartida, timeId, winner, tie, updAtDate, updAtIdUser) VALUES ($1, $2, $3, $4, $5, $6, $7)", [confronto.id ,confronto.idPartida, confronto.timeId, confronto.winner, confronto.tie, confronto.updAtDate, confronto.updAtIdUser]);
