@@ -72,6 +72,13 @@ export const createPartida = async (req, res) => {
     }
 };
 
+// faça uma query de create para insomina
+//  {
+//      "data": "2022-12-31",
+//      "anotacao": "Partida de teste",
+//      "updateUser": 1
+//  }
+
 export const getPartidaById = async (req, res) => {
     try {
         const { id } = req.params;

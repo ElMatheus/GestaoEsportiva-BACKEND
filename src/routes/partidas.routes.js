@@ -3,6 +3,7 @@ import { Router } from "express";
 import {
     createPartida,
     getPartidaById,
+    getPartidaAndConfrontos,
     getPartidas,
     updatePartida,
     deletePartida
@@ -13,6 +14,7 @@ const confrontosRouter = Router();
 
 confrontosRouter.post("/", createPartida);
 confrontosRouter.get("/", getPartidas);
+confrontosRouter.get("/confrontos", getPartidaAndConfrontos);
 confrontosRouter.get("/:id", getPartidaById);
 confrontosRouter.put("/:id", updatePartida);
 confrontosRouter.delete("/:id", deletePartida);
