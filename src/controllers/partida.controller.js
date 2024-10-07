@@ -77,12 +77,25 @@ export const getPartidaById = async (req, res) => {
         const { id } = req.params;
 
         const partida = await partidasRepository.getPartidaById(id);
+        const confrontos = await partidasRepository.getPartidaAndConfrontos();
 
         if (!partida) {
             return res.status(404).send({ message: "Partida não encontrada" });
         }
 
-        return res.status(200).send(partida);
+        partida.confrontos = confrontos.filter(confronto => confronto.id_partida == partida.id).map(confronto => ({
+            id: confronto.id,
+            timeID: confronto.timeId,
+            winner: confronto.winner,
+            tie: confronto.tie
+        }));
+
+        return res.json({ 
+            status: "success",
+            message: "Partida encontrada",
+            data: partida
+        });
+
     } catch (error) {
         return res.status(500).send({ message: "Erro ao buscar partida", error: error.message });
     }
