@@ -11,7 +11,11 @@ export const createJogador = async (req, res) => {
 
         await jogadorRepository.createJogador(jogador);
 
-        return res.status(201).send(jogador);
+        return res.json({
+            status: "success",
+            message: "Jogador criado com sucesso",
+            data: jogador
+        })
     } catch (error) {
         return res.status(500).send({ message: "Erro ao criar jogador", error: error.message });
     }
@@ -25,6 +29,7 @@ export const getJogadores = async (req, res) => {
         res.json({
             status: "success",
             message: "Jogadores listados com sucesso",
+            total: jogadores.length,
             data: jogadores
         })
     } catch (error) {

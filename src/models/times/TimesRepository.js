@@ -14,6 +14,28 @@ export default class TimesRepository {
         }
     }
 
+    async getJogadoresPorTime() {
+        try {
+            const jogadoresPorTime = await this.pg.manyOrNone(`
+                SELECT 
+                    times.id AS id_time, 
+                     times.nome AS nome_time,
+                    jogadores.id AS id_jogador, 
+                    jogadores.nome AS nome_jogador, 
+                    jogadores.sala AS sala_jogador 
+                FROM 
+                    times 
+                INNER JOIN 
+                    jogadores 
+                ON 
+                    times.id = jogadores.time_id
+            `);
+            return jogadoresPorTime;
+        } catch (error) {
+            throw error;
+        }
+    }
+
     async getTimesById(id) {
         try {
             const time = await this.pg.oneOrNone("SELECT * FROM times WHERE id = $1", id);

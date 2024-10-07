@@ -17,7 +17,12 @@ export const getUsers = async (req, res) => {
     if (!users) {
       return res.status(404).send({ message: "Não há usuários cadastrados" });
     }
-    return res.status(200).send({ totalUsers: users.length, users });
+    return res.json({
+      status: "success",
+      message: "Usuários listados com sucesso",
+      total: users.length,
+      data: users
+    })
   } catch (error) {
     return res.status(500).send({ message: "Erro ao buscar usuários", error: error.message });
   }
