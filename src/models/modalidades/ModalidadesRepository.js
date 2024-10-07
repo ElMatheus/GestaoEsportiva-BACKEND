@@ -21,9 +21,9 @@ export default class ModalidadesRepository {
                     times.id AS id_time,
                     times.nome AS nome_time,
                     times.sala,
-                    times.modalidade_id AS id_modalidade,
+                    times.modalidade_id AS id_modalidade_in_time,
                     times.status,
-                    times.pontos,
+                    times.pontos
                 FROM
                     modalidade
                 INNER JOIN
