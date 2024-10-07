@@ -65,14 +65,26 @@ export const getTimesById = async (req, res) => {
         const { id } = req.params;
 
         const times = await timesRepository.getTimesById(id);
+        const jogadores = await timesRepository.getJogadoresPorTime();
 
         if (!times) {
             return res.status(404).send({ message: "Time não encontrado" });
         }
 
-        return res.status(200).send({ message: "Time encontrado", times });
+        times.jogadores = jogadores.filter(jogador => jogador.id_time == times.id).map(jogador => ({
+            id: jogador.id_jogador,
+            nome: jogador.nome_jogador,
+            sala: jogador.sala_jogador,
+            id_time: jogador.id_time
+        }));
+
+        return res.json({
+            status: "success",
+            message: "Times listados com sucesso",
+            data: times
+        })
     } catch (error) {
-        return res.status(500).send({ message: "Erro ao buscar time", error: error.message });
+        return res.status(500).send({ message: "Erro ao buscar times", error: error.message });
     }
 }
 
