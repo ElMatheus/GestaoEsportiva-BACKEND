@@ -35,4 +35,18 @@ export default class ConfrontosRepository {
             throw error;
         }
     };
+    async updateConfronto(confronto, id) {
+        try {
+            await this.pg.none("UPDATE confronto SET idPartida = $1, timeId = $2, winner = $3, tie = $4, updAtDate = $5, updAtIdUser = $6 WHERE id = $7", [confronto.idPartida, confronto.timeId, confronto.winner, confronto.tie, confronto.updAtDate, confronto.updAtIdUser, id]);
+        } catch (error) {
+            throw error;
+        }
+    };
+    async deleteConfronto(id) {
+        try {
+            await this.pg.none("DELETE FROM confronto WHERE id = $1", id);
+        } catch (error) {
+            throw error;
+        }
+    };
 }

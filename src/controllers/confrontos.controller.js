@@ -66,3 +66,42 @@ export const createConfronto = async (req, res) => {
         return res.status(500).send({ message: "Erro ao criar confronto", error: error.message });
     }
 };
+
+export const updateConfronto = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { winner, tie, updAtIdUser } = req.body;
+
+        const confronto = await confrontoRepository.getConfrontoById(id);
+
+        if (!confronto) {
+            return res.status(404).send({ message: "Confronto não encontrado" });
+        }
+
+        const confrontoObj = new Confronto(confronto.idpartida, confronto.timeid, winner, tie, updAtIdUser);
+
+        await confrontoRepository.updateConfronto(confrontoObj, id);
+
+        return res.status(200).send(confrontoObj);
+    } catch (error) {
+        return res.status(500).send({ message: "Erro ao atualizar confronto", error: error.message });
+    }
+};
+
+export const deleteConfronto = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const confronto = await confrontoRepository.getConfrontoById(id);
+
+        if (!confronto) {
+            return res.status(404).send({ message: "Confronto não encontrado" });
+        }
+
+        await confrontoRepository.deleteConfronto(id);
+
+        return res.status(200).send({ message: "Confronto deletado com sucesso" });
+    } catch (error) {
+        return res.status(500).send({ message: "Erro ao deletar confronto", error: error.message });
+    }
+};
