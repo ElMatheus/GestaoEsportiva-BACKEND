@@ -24,6 +24,40 @@ export const getPartidas = async (req, res) => {
     }
 };
 
+export const getPartidaAndConfrontos = async (req, res) => {
+    try {
+        const partidas = await partidasRepository.getPartidas();
+        const confrontos = await partidasRepository.getPartidaAndConfrontos();
+        const { data } = req.query;
+
+        if (data) {
+            const partida = await partidasRepository.getPartidaByData(data);
+
+            if (!partida) {
+                return res.status(404).send({ message: "Partida não encontrada" });
+            }
+
+            const confrontosDaPartida = partidas.map(partida => {
+                partida.confrontos = confrontos.filter(confronto => confronto.id_partida == partida.id).map(confronto => ({
+                    id: confronto.id,
+                    timeID: confronto.timeId,
+                    winner: confronto.winner,
+                    tie: confronto.tie
+                }));
+                return partida;
+            })
+            return res.json({ 
+                status: "success",
+                message: "Partida encontrada",
+                total: confrontosDaPartida.length,
+                data: confrontosDaPartida
+            });
+        }
+    } catch (error) {
+        return res.status(500).send({ message: "Erro ao buscar partidas", error: error.message });
+    }
+}
+
 export const createPartida = async (req, res) => {
     try {
         const { data, anotacao, updateUser } = req.body;

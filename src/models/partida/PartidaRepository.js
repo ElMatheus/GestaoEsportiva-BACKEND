@@ -9,7 +9,7 @@ export default class PartidaRepository {
     return partidas;
   };
 
-  async getPartidaByConfrontos() {
+  async getPartidaAndConfrontos() {
     try {
         const PartidaPorConfronto = await this.pg.manyOrNone(
             "SELECT partida.id AS id_partida, partida.data AS data_da_partida, partida.anotacao AS anotacao_da_partida, confronto.id AS confronto_id, confronto.timeId, confronto.winner, confronto.tie FROM partida INNER JOIN confronto ON partida.id = confronto.idPartida"
@@ -19,6 +19,7 @@ export default class PartidaRepository {
         throw error;
     }
 };
+
 
   async createPartida(partida) {
     await this.pg.none("INSERT INTO partida (data, anotacao, updAtDate, updAtIdUser) VALUES ($1, $2, $3, $4)", [
