@@ -40,7 +40,7 @@ export const getPartidaAndConfrontos = async (req, res) => {
             const confrontosDaPartida = partidas.map(partida => {
                 partida.confrontos = confrontos.filter(confronto => confronto.id_partida == partida.id).map(confronto => ({
                     id: confronto.id,
-                    timeID: confronto.timeId,
+                    timeId: confronto.timeId,
                     winner: confronto.winner,
                     tie: confronto.tie
                 }));
