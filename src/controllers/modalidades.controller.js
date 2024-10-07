@@ -20,7 +20,7 @@ export const getModalidades = async (req, res) => {
     const times = await modalidadeRepository.getTimesByModalidade();
 
     const modalidadesTimes = modalidades.map(modalidade => {
-      modalidade.times = times.filter(time => time.id_modalidade == modalidade.id_modalidade).map(time => ({
+      modalidade.times = times.filter(time => time.id_modalidade == modalidade.id).map(time => ({
         id: time.id_time,
         nome: time.nome_time,
         sala: time.sala,
@@ -30,8 +30,7 @@ export const getModalidades = async (req, res) => {
       }));
 
       return modalidade;
-    }
-    );
+    });
 
     return res.json({
       status: "success",
