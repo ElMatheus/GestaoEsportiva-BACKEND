@@ -36,23 +36,22 @@ export const getPartidaAndConfrontos = async (req, res) => {
             if (!partida) {
                 return res.status(404).send({ message: "Partida não encontrada" });
             }
-
-            const confrontosDaPartida = partidas.map(partida => {
-                partida.confrontos = confrontos.filter(confronto => confronto.id_partida == partida.id).map(confronto => ({
-                    id: confronto.id,
-                    timeId: confronto.timeId,
-                    winner: confronto.winner,
-                    tie: confronto.tie
-                }));
-                return partida;
-            })
-            return res.json({ 
-                status: "success",
-                message: "Partida encontrada",
-                total: confrontosDaPartida.length,
-                data: confrontosDaPartida
-            });
         }
+        const confrontosDaPartida = partidas.map(partida => {
+            partida.confrontos = confrontos.filter(confronto => confronto.id_partida == partida.id).map(confronto => ({
+                id: confronto.confronto_id,
+                timeid: confronto.timeid,
+                winner: confronto.winner,
+                tie: confronto.tie
+            }));
+            return partida;
+        });
+        return res.json({
+            status: "success",
+            message: "Partida encontrada",
+            total: confrontosDaPartida.length,
+            data: confrontosDaPartida
+        });
     } catch (error) {
         return res.status(500).send({ message: "Erro ao buscar partidas", error: error.message });
     }
@@ -91,13 +90,13 @@ export const getPartidaById = async (req, res) => {
         }
 
         partida.confrontos = confrontos.filter(confronto => confronto.id_partida == partida.id).map(confronto => ({
-            id: confronto.id,
-            timeID: confronto.timeId,
+            id: confronto.confronto_id,
+            timeid: confronto.timeid,
             winner: confronto.winner,
             tie: confronto.tie
         }));
 
-        return res.json({ 
+        return res.json({
             status: "success",
             message: "Partida encontrada",
             data: partida
