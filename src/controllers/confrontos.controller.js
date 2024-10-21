@@ -114,3 +114,7 @@ export const deleteConfronto = async (req, res) => {
         return res.status(500).send({ message: "Erro ao deletar confronto", error: error.message });
     }
 };
+
+
+
+

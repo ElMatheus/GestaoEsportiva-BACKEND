@@ -6,7 +6,7 @@ import {
     getConfrontosByIdPartida,
     createConfronto,
     updateConfronto,
-    deleteConfronto
+    deleteConfronto,
 } from "../controllers/confrontos.controller.js";
 import { ensureAuthenticated } from "../middlewares/ensureAuthenticated.js";
 

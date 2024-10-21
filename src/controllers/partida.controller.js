@@ -56,20 +56,21 @@ export const getPartidaAndConfrontos = async (req, res) => {
         return res.status(500).send({ message: "Erro ao buscar partidas", error: error.message });
     }
 }
-
 export const createPartida = async (req, res) => {
     try {
         const { data, anotacao, updateUser } = req.body;
 
         const partida = new Partida(data, anotacao, updateUser);
 
-        await partidasRepository.createPartida(partida);
+        // Chame o repositório e capture a nova partida retornada
+        const novaPartida = await partidasRepository.createPartida(partida);
 
-        return res.status(201).send(partida);
+        return res.status(201).send(novaPartida); // Retorna a nova partida com ID
     } catch (error) {
         return res.status(500).send({ message: "Erro ao criar partida", error: error.message });
     }
 };
+
 
 // faça uma query de create para insomina
 //  {
