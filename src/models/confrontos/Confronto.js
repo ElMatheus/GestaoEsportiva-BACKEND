@@ -9,6 +9,5 @@ export default class Confronto {
     this.tie = tie;
     this.updAtDate = new Date().toISOString();
     this.updAtIdUser = updAtIdUser;
-    this.data = data;
   }
 }

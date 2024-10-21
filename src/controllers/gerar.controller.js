@@ -33,7 +33,6 @@ export const gerarTodosConfrontos = async (req, res) => {
                     idPartida: partidaId,
                     timeA: { id: timeA.id, nome: timeA.nome }, // Dados do time A
                     timeB: { id: timeB.id, nome: timeB.nome }, // Dados do time B
-                    data: '2024-11-01',
                     winner: false,
                     tie: false
                 });
@@ -46,7 +45,6 @@ export const gerarTodosConfrontos = async (req, res) => {
                 id: confronto.id,
                 idPartida: confronto.idPartida,
                 timeId: confronto.timeA.id,
-                data: confronto.data,
                 winner: confronto.winner,
                 tie: confronto.tie
             });
@@ -54,7 +52,6 @@ export const gerarTodosConfrontos = async (req, res) => {
                 id: uuidv4(),
                 idPartida: confronto.idPartida,
                 timeId: confronto.timeB.id,
-                data: confronto.data,
                 winner: confronto.winner,
                 tie: confronto.tie
             });
