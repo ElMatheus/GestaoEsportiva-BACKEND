@@ -67,15 +67,6 @@ export const createConfronto = async (req, res) => {
     }
 };
 
-//faça uma query de create para insomina
-//  {
-//      "idPartida": 1,
-//      "timeId": 1,
-//      "winner": true,
-//      "tie": false,
-//      "updAtIdUser": 1
-//  }
-
 export const updateConfronto = async (req, res) => {
     try {
         const { id } = req.params;
