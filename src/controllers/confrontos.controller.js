@@ -9,7 +9,7 @@ const timesRepository = new TimesRepository();
 
 export const getAllConfrontos = async (req, res) => {
     try {
-        const confrontos = await confrontoRepository.getConfrontos();
+        const confrontos = await confrontoRepository.getConfrontosLimpo();
 
         return res.status(200).send(confrontos);
     } catch (error) {
@@ -45,7 +45,7 @@ export const getConfrontosByIdPartida = async (req, res) => {
 
 export const createConfronto = async (req, res) => {
     try {
-        const { idPartida, timeId, winner, tie, updAtIdUser } = req.body;
+        const { idPartida, timeId, winner, tie, updAtIdUser, data } = req.body;
         const verificaPartida = await partidaRepository.getPartidaById(idPartida);
         const verificaTime = await timesRepository.getTimesById(timeId);
 
@@ -57,7 +57,7 @@ export const createConfronto = async (req, res) => {
             return res.status(404).send({ message: "Time não encontrado" });
         };
 
-        const confronto = new Confronto(idPartida, timeId, winner, tie, updAtIdUser);
+        const confronto = new Confronto(idPartida, timeId, winner, tie, updAtIdUser,);
 
         await confrontoRepository.createConfronto(confronto);
 

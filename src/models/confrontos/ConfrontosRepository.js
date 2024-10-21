@@ -12,6 +12,25 @@ export default class ConfrontosRepository {
             throw error;
         }
     };
+
+    async getConfrontosLimpo() {
+        try {
+            const allConfrontos = await this.pg.manyOrNone(`
+                SELECT 
+                    LEAST(time1, time2) AS time1,
+                    GREATEST(time1, time2) AS time2
+                FROM 
+                    confronto
+                GROUP BY 
+                    LEAST(time1, time2), GREATEST(time1, time2);
+            `);
+            return allConfrontos;
+        } catch (error) {
+            throw error;
+        }
+    }
+    
+
     async getConfrontoById(id) {
         try {
             const confronto = await this.pg.oneOrNone("SELECT * FROM confronto WHERE id = $1", id);
@@ -31,8 +50,9 @@ export default class ConfrontosRepository {
 
 
     async createConfronto(confronto) {
+        console.log(confronto)
         try {
-            await this.pg.none("INSERT INTO confronto (id, idPartida, timeId, winner, tie, updAtDate, updAtIdUser) VALUES ($1, $2, $3, $4, $5, $6, $7)", [confronto.id ,confronto.idPartida, confronto.timeId, confronto.winner, confronto.tie, confronto.updAtDate, confronto.updAtIdUser]);
+            await this.pg.none("INSERT INTO confronto (id, idPartida, timeId, winner, tie, updAtDate, updAtIdUser, data) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)", [confronto.id ,confronto.idPartida, confronto.timeId, confronto.winner, confronto.tie, confronto.updAtDate, confronto.updAtIdUser, confronto.data]);
         } catch (error) {
             throw error;
         }
