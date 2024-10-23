@@ -29,7 +29,7 @@ export default class ConfrontosRepository {
             throw error;
         }
     }
-    
+
 
     async getConfrontoById(id) {
         try {
@@ -51,7 +51,7 @@ export default class ConfrontosRepository {
 
     async createConfronto(confronto) {
         try {
-            await this.pg.none("INSERT INTO confronto (id, idPartida, timeId, winner, tie, updAtDate, updAtIdUser) VALUES ($1, $2, $3, $4, $5, $6, $7)", [confronto.id ,confronto.idPartida, confronto.timeId, confronto.winner, confronto.tie, confronto.updAtDate, confronto.updAtIdUser]);
+            await this.pg.none("INSERT INTO confronto (id, idPartida, timeId, winner, tie, updAtDate, updAtIdUser) VALUES ($1, $2, $3, $4, $5, $6, $7)", [confronto.id, confronto.idPartida, confronto.timeId, confronto.winner, confronto.tie, confronto.updAtDate, confronto.updAtIdUser]);
         } catch (error) {
             throw error;
         }
@@ -70,4 +70,12 @@ export default class ConfrontosRepository {
             throw error;
         }
     };
+    async findNameTimeByConfronto(id) {
+        try {
+            const time = await this.pg.oneOrNone("SELECT confronto.id AS id_confronto, confronto.idPartida, confronto.timeID, confronto.winner, confronto.tie, times.id AS time_id, times.nome AS time_nome FROM times INNER JOIN confronto ON times.id = confronto.timeID", id);
+            return time;
+        } catch (error) {
+            throw error;
+        }
+    }
 }
