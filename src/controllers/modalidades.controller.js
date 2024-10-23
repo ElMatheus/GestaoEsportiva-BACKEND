@@ -143,5 +143,15 @@ export const getModalidadeByTipo = async (req, res) => {
   }
 };
 
-
-
+export const getPartidasByModalidade = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const partidas = await modalidadeRepository.getPartidasByModalidade(id);
+    if (partidas.length === 0) {
+      return res.status(404).send({ message: "Partida não encontrada" });
+    }
+    return res.status(200).send(partidas);
+  } catch (error) {
+    return res.status(500).send({ message: "Erro ao buscar partidas", error: error.message });
+  }
+};

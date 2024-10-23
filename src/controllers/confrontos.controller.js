@@ -9,7 +9,7 @@ const timesRepository = new TimesRepository();
 
 export const getAllConfrontos = async (req, res) => {
     try {
-        const confrontos = await confrontoRepository.getConfrontosLimpo();
+        const confrontos = await confrontoRepository.getConfrontos();
 
         return res.status(200).send(confrontos);
     } catch (error) {
