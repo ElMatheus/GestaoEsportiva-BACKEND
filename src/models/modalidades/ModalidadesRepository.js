@@ -101,6 +101,14 @@ export default class ModalidadesRepository {
       throw error;
     }
   }
+  async getPartidasByModalidade(id) {
+    try {
+      const partidas = await this.pg.manyOrNone("SELECT * FROM partida INNER JOIN confronto ON partida.id = confronto.idPartida INNER JOIN times ON confronto.timeId = times.id WHERE modalidade_id = $1", id);
+      return partidas;
+    } catch (error) {
+      throw error;
+    }
+  }
 
 }
 

@@ -21,15 +21,19 @@ export default class PartidaRepository {
 };
 
 
-  async createPartida(partida) {
-    await this.pg.none("INSERT INTO partida (data, anotacao, updAtDate, updAtIdUser) VALUES ($1, $2, $3, $4)", [
+async createPartida(partida) {
+  const newPartida = await this.pg.one(
+    "INSERT INTO partida (data, anotacao, updAtDate, updAtIdUser) VALUES ($1, $2, $3, $4) RETURNING *",
+    [
       partida.data,
       partida.anotacao,
       partida.updateDate,
       partida.updateUser
-    ]);
-    return partida;
-  };
+    ]
+  );
+  return newPartida; // Retorna todos os dados, incluindo o ID
+}
+
 
   async getPartidaById(id) {
     const partida = await this.pg.oneOrNone("SELECT * FROM partida WHERE id = $1", id);

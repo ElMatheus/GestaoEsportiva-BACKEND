@@ -8,7 +8,8 @@ import {
   getModalidadeByTipo,
   createModalidade,
   updateModalidade,
-  deleteModalidade
+  deleteModalidade,
+  getPartidasByModalidade
 } from "../controllers/modalidades.controller.js";
 import { ensureAuthenticated } from "../middlewares/ensureAuthenticated.js";
 
@@ -22,6 +23,7 @@ modalidadesRouter.get("/tipo/:tipo", getModalidadeByTipo);
 modalidadesRouter.post("/", createModalidade);
 modalidadesRouter.put("/:id", updateModalidade);
 modalidadesRouter.delete("/:id", deleteModalidade);
+modalidadesRouter.get("/:id/partidas", getPartidasByModalidade);
 
 
 export default modalidadesRouter;
