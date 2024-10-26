@@ -8,14 +8,14 @@ export const createCampeonato = async (req, res) => {
         const { titulo, data_inicio, data_final } = req.body;
 
         if (data_final < data_inicio) {
-            return res.status(400).send({ message: "Data final menor que data inicial" });
+            return res.status(400).send({status: "error", message: "Data final menor que data inicial" });
         }
 
         const campeonato = new Campeonato(titulo, data_inicio, data_final);
-
+        
         await campeonatosRepository.createCampeonato(campeonato);
 
-        return res.status(201).send(campeonato);
+        return res.status(201).send({status: "sucess", campeonato});
     } catch (error) {
         return res.status(500).send({ message: "Erro ao criar campeonato", error: error.message });
     }
