@@ -142,13 +142,13 @@ export const loginUser = async (req, res) => {
     const user = await usersRepository.getUserByName(nome);
     // verificacao se usuario existe pelo nome
     if (!user) {
-      return res.status(404).send({ message: "Usuário não encontrado" });
+      return res.status(404).send({status: "error", message: "Usuário não encontrado" });
     }
     // comparacao de senha com hash
     const passwordMatch = await compare(senha, user.senha);
     // se tiver erro na senha retorna isso
     if (!passwordMatch) {
-      return res.status(401).send({ message: "Nome ou senha inválidos" });
+      return res.status(401).send({status: "error", message: "Nome ou senha inválidos" });
     }
     // geracao do acess token
     const token = sign({}, '8d59240f-7a89-4817-bfb0-2d0d5e717ed3', {

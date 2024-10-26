@@ -36,6 +36,15 @@ export default class CampeonatosRepository {
       throw error;
     }
   }
+  async getCampeonatoByDate(data) {
+    try {
+      const date = new Date(data).toISOString().split('T')[0];
+      const campeonato = this.pg.manyOrNone("SELECT * FROM campeonato WHERE $1 BETWEEN data_inicio AND data_final", date);
+      return campeonato;
+    } catch (error) {
+      throw error;
+    }
+  }
   async createCampeonato(campeonato) {
     try {
       await this.pg.none("INSERT INTO campeonato (id, titulo, data_inicio, data_final) VALUES ($1, $2, $3, $4)", [

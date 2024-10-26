@@ -7,7 +7,8 @@ import {
     createCampeonato,
     updateCampeonato,
     deleteCampeonato,
-    getDurationCampeonato
+    getDurationCampeonato,
+    getCampeonatoByDate
 } from "../controllers/campeonatos.controller.js";
 import { ensureAuthenticated } from "../middlewares/ensureAuthenticated.js";
 
@@ -16,6 +17,7 @@ const campeonatosRouter = Router();
 campeonatosRouter.get("/", getCampeonatos);
 campeonatosRouter.get("/:id", getCampeonatoById);
 campeonatosRouter.get("/titulo/:titulo", getCampeonatoByTitulo);
+campeonatosRouter.get("/date/:date", getCampeonatoByDate);
 campeonatosRouter.post("/", createCampeonato);
 campeonatosRouter.put("/:id", updateCampeonato);
 campeonatosRouter.delete("/:id", deleteCampeonato);

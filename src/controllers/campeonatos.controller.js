@@ -11,7 +11,7 @@ export const createCampeonato = async (req, res) => {
             return res.status(400).send({status: "error", message: "Data final menor que data inicial" });
         }
 
-        const campeonato = new Campeonato(titulo, data_inicio, data_final);
+        const campeonato = new Campeonato(titulo, data_inicio, data_final); 
         
         await campeonatosRepository.createCampeonato(campeonato);
 
@@ -60,6 +60,19 @@ export const getCampeonatoByTitulo = async (req, res) => {
         }
         return res.status(200).send(campeonato);
 
+    } catch (error) {
+        return res.status(500).send({ message: "Erro ao buscar campeonato", error: error.message });
+    }
+};
+
+export const getCampeonatoByDate = async (req, res) => {
+    try {
+        const { date } = req.params;
+        const campeonato = await campeonatosRepository.getCampeonatoByDate(date);
+        if (campeonato.length === 0) {
+            return res.status(404).send({ status: "error", message: "Campeonato não encontrado" });
+        }
+        return res.status(200).send(campeonato);
     } catch (error) {
         return res.status(500).send({ message: "Erro ao buscar campeonato", error: error.message });
     }
