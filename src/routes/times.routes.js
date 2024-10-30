@@ -7,6 +7,7 @@ import {
     getTimesById,
     updateTimes,
     getTimesByModalidadeID,
+    getTimesByCampeonatoID,
     getTimesBySala,
     deleteTimes
 } from "../controllers/times.controller.js";
@@ -20,6 +21,7 @@ timeRouter.get("/:id", getTimesById);
 timeRouter.post("/", createTimes);
 timeRouter.put("/:id", updateTimes);
 timeRouter.get("/modalidade/:modalidade_id", getTimesByModalidadeID);
+timeRouter.get("/campeonato/:campeonato_id", getTimesByCampeonatoID);
 timeRouter.get("/sala/:sala", getTimesBySala);  
 timeRouter.delete("/:id", deleteTimes);
 

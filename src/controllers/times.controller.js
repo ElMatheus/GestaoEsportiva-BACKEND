@@ -119,6 +119,27 @@ export const getTimesByModalidadeID = async (req, res) => {
     }
 }
 
+export const getTimesByCampeonatoID = async (req, res) => {
+    try {
+        const { campeonato_id } = req.params;
+
+        const times = await timesRepository.getTimeByCampeonatoID(campeonato_id);
+        
+        if (!times || times.length === 0) {
+            return res.status(404).send({ message: "Times não encontrados" });
+        }
+
+        for (const time of times) {
+            const jogadores = await timesRepository.getJogadoresByTimeID(time.time_id);
+            time.jogadores = jogadores;
+        }
+
+        return res.status(200).send({ times });
+    } catch (error) {
+        return res.status(500).send({ message: "Erro ao buscar times", error: error.message });
+    }
+}
+
 export const getJogadoresByTimeID = async (req, res) => {
     try {
         const { time_id } = req.params;

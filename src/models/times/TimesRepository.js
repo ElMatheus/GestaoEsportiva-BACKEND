@@ -81,7 +81,16 @@ export default class TimesRepository {
 
     async getTimeByModalidadeID(modalidade_id) {
         try {
-            const time = await this.pg.manyOrNone("SELECT * FROM times WHERE LOWER(modalidade_id) LIKE $1", modalidade_id.toLocaleLowerCase());
+            const time = await this.pg.manyOrNone("SELECT * FROM stimes WHERE LOWER(modalidade_id) LIKE $1", modalidade_id.toLocaleLowerCase());
+            return time;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async getTimeByCampeonatoID(campeonato_id) {
+        try {
+            const time = await this.pg.manyOrNone("SELECT times.id AS time_id, times.nome AS time_nome, times.sala AS time_sala, times.modalidade_id, times.status, times.pontos, modalidade.nome_modalidade, modalidade.limite_pessoas, modalidade.valor_por_pessoa, modalidade.campeonato_id FROM times INNER JOIN modalidade ON times.modalidade_id = modalidade.id WHERE LOWER(modalidade.campeonato_id) LIKE $1", campeonato_id.toLocaleLowerCase());
             return time;
         } catch (error) {
             throw error;
