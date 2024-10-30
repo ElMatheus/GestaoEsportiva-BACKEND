@@ -117,13 +117,15 @@ export const getTimesByModalidadeID = async (req, res) => {
     } catch (error) {
         return res.status(500).send({ message: "Erro ao buscar time", error: error.message });
     }
+
 }
 
 export const getTimesByCampeonatoID = async (req, res) => {
     try {
         const { campeonato_id } = req.params;
+        const { status } = req.query;
 
-        const times = await timesRepository.getTimeByCampeonatoID(campeonato_id);
+        const times = await timesRepository.getTimeByCampeonatoID(campeonato_id, status);
         
         if (!times || times.length === 0) {
             return res.status(404).send({ message: "Times não encontrados" });
