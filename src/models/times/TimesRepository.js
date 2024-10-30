@@ -88,13 +88,22 @@ export default class TimesRepository {
         }
     }
 
-    async getTimeByCampeonatoID(campeonato_id, status) {
+    async getTimeByCampeonatoID(campeonato_id, status, name) {
         try {
-            const time = await this.pg.manyOrNone(
-                "SELECT times.id AS time_id, times.nome AS time_nome, times.sala AS time_sala, times.modalidade_id, times.status, times.pontos, modalidade.nome_modalidade, modalidade.limite_pessoas, modalidade.valor_por_pessoa, modalidade.campeonato_id FROM times INNER JOIN modalidade ON times.modalidade_id = modalidade.id WHERE LOWER(times.status) LIKE $1 AND LOWER(modalidade.campeonato_id) LIKE $2",
-                [status.toLocaleLowerCase(), campeonato_id.toLocaleLowerCase()]
-            );
-            return time;
+            if (name) {
+                const time = await this.pg.manyOrNone(
+                    "SELECT times.id AS time_id, times.nome AS time_nome, times.sala AS time_sala, times.modalidade_id, times.status, times.pontos, modalidade.nome_modalidade, modalidade.limite_pessoas, modalidade.valor_por_pessoa, modalidade.campeonato_id FROM times INNER JOIN modalidade ON times.modalidade_id = modalidade.id WHERE LOWER(times.status) LIKE $1 AND LOWER(modalidade.campeonato_id) LIKE $2 AND LOWER(times.nome) ILIKE $3",
+                    [status.toLocaleLowerCase(), campeonato_id.toLocaleLowerCase(), `%${name.toLocaleLowerCase()}%`]
+                );
+                return time;
+            } else {
+                const time = await this.pg.manyOrNone(
+                    "SELECT times.id AS time_id, times.nome AS time_nome, times.sala AS time_sala, times.modalidade_id, times.status, times.pontos, modalidade.nome_modalidade, modalidade.limite_pessoas, modalidade.valor_por_pessoa, modalidade.campeonato_id FROM times INNER JOIN modalidade ON times.modalidade_id = modalidade.id WHERE LOWER(times.status) LIKE $1 AND LOWER(modalidade.campeonato_id) LIKE $2",
+                    [status.toLocaleLowerCase(), campeonato_id.toLocaleLowerCase()]
+                );
+                return time;
+            }
+
         } catch (error) {
             throw error;
         }

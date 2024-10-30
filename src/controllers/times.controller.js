@@ -124,9 +124,10 @@ export const getTimesByCampeonatoID = async (req, res) => {
     try {
         const { campeonato_id } = req.params;
         const { status } = req.query;
+        const { name } = req.query;
 
-        const times = await timesRepository.getTimeByCampeonatoID(campeonato_id, status);
-        
+        const times = await timesRepository.getTimeByCampeonatoID(campeonato_id, status, name);
+
         if (!times || times.length === 0) {
             return res.status(404).send({ message: "Times não encontrados" });
         }
