@@ -19,6 +19,18 @@ export const createTimes = async (req, res) => {
 
 export const getTimes = async (req, res) => {
     try {
+        const { campeonato_id } = req.query;
+
+        if (campeonato_id) {
+            const times = await timesRepository.getAllTimesByCampeonato(campeonato_id);
+
+            if (!times) {
+                return res.status(404).send({ message: "Time não encontrado" });
+            }
+
+            return res.status(200).send(times);
+        }
+        
         const times = await timesRepository.getAllTimes();
         const jogadores = await timesRepository.getJogadoresPorTime();
 

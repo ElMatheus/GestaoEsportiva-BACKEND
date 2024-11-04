@@ -14,6 +14,15 @@ export default class TimesRepository {
         }
     }
 
+    async getAllTimesByCampeonato(campeonato_id) {
+        try {
+            const allTimes = await this.pg.manyOrNone("SELECT * FROM times INNER JOIN modalidade ON times.modalidade_id = modalidade.id WHERE modalidade.campeonato_id = $1", campeonato_id);
+            return allTimes;
+        } catch (error) {
+            throw error;
+        }
+    }
+
     async getJogadoresPorTime() {
         try {
             const jogadoresPorTime = await this.pg.manyOrNone(`
