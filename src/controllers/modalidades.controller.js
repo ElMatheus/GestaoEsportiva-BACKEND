@@ -8,7 +8,11 @@ export const createModalidade = async (req, res) => {
     const { nome, descricao, limite_pessoas, campeonato_id, valor_por_pessoa, tipo } = req.body;
     const modalidade = new Modalidade(nome, descricao, limite_pessoas, campeonato_id, valor_por_pessoa, tipo);
     await modalidadeRepository.createModalidade(modalidade);
-    return res.status(201).send(modalidade);
+    return res.status(201).send({
+      status: "success",
+      message: "Modalidade criada com sucesso",
+      modalidades: modalidade
+    });
   } catch (error) {
     return res.status(500).send({ message: "Erro ao criar modalidade", error: error.message });
   }
