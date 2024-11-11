@@ -7,6 +7,7 @@ import jogadorRouter from "./jogador.routes.js"
 import confrontosRouter from "./confrontos.routes.js"
 import partidasRouter from "./partidas.routes.js"
 import gerarRouter from "./gerar.routes.js"
+import feedbackRouter from "./feedback.routes.js";
 
 const router = Router();
 
@@ -22,6 +23,7 @@ router.use("/modalidades", modalidadesRouter);
 router.use("/times", timeRouter);
 router.use("/jogadores", jogadorRouter);
 router.use ("/gerar", gerarRouter);
+router.use("/feedback", feedbackRouter);
 
 
 export { router };
