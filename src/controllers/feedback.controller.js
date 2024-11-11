@@ -5,13 +5,17 @@ const feedbackRepository = new FeedbackRepository();
 
 export const createFeedback = async (req, res) => {
     try {
-        const { nome_usuario, comentario, nota, data } = req.body;
+        const { nome_usuario, comentario, nota } = req.body;
 
-        if (!nome_usuario || !comentario || !nota || !data) {
+        if (!nome_usuario || !comentario || !nota) {
             return res.status(400).send({ message: "Dados obrigatórios faltando" });
         }
 
-        const feedback = new Feedback(nome_usuario, comentario, nota, data);
+        if(nota < 1 || nota > 5) {
+            return res.status(400).send({ message: "Nota deve ser entre 1 e 5" });
+        }
+
+        const feedback = new Feedback(nome_usuario, comentario, nota);
 
         await feedbackRepository.createFeedback(feedback);
 
