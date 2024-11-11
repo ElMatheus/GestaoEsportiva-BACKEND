@@ -15,6 +15,13 @@ data_inicio DATE NOT NULL,
 data_final DATE NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS feedback (
+    id SERIAL PRIMARY KEY,
+    nome_usuario VARCHAR(100) NOT NULL,
+    comentario TEXT NOT NULL,
+    nota INT DEFAULT(0) NOT NULL
+);
+
 CREATE TABLE IF NOT EXISTS modalidade (
 id VARCHAR(100) PRIMARY KEY NOT NULL,
 nome_modalidade VARCHAR(100) NOT NULL UNIQUE,
