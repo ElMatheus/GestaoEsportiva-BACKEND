@@ -15,8 +15,8 @@ const confrontosRouter = Router();
 confrontosRouter.get("/", getAllConfrontos);
 confrontosRouter.get("/:id", getConfrontoById);
 confrontosRouter.get("/partida/:id", getConfrontosByIdPartida);
-confrontosRouter.post("/", createConfronto);
-confrontosRouter.put("/:id", updateConfronto);
+confrontosRouter.post("/", ensureAuthenticated, createConfronto);
+confrontosRouter.put("/:id", ensureAuthenticated, updateConfronto);
 confrontosRouter.delete("/:id", deleteConfronto);
 
 export default confrontosRouter;   

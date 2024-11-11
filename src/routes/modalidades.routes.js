@@ -20,8 +20,8 @@ modalidadesRouter.get("/:id", getModalidadeById);
 modalidadesRouter.get("/nome/:nome", getModalidadeByNome);
 modalidadesRouter.get("/campeonato/:campeonato_id", getModalidadeByCampeonatoId);
 modalidadesRouter.get("/tipo/:tipo", getModalidadeByTipo);
-modalidadesRouter.post("/", createModalidade);
-modalidadesRouter.put("/:id", updateModalidade);
+modalidadesRouter.post("/", ensureAuthenticated, createModalidade);
+modalidadesRouter.put("/:id", ensureAuthenticated, updateModalidade);
 modalidadesRouter.delete("/:id", deleteModalidade);
 modalidadesRouter.get("/:id/partidas", getPartidasByModalidade);
 
