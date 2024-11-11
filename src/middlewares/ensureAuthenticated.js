@@ -11,7 +11,12 @@ export const ensureAuthenticated = async (req, res, next) => {
   const token = authorization.replace("Bearer", "").trim();
 
   try {
-    verify(token, '8d59240f-7a89-4817-bfb0-2d0d5e717ed3');
+    const decoded = verify(token, '8d59240f-7a89-4817-bfb0-2d0d5e717ed3');
+    
+    // Verificação de tipo de usuário
+    if (decoded.type !== 'admin') {
+      return res.status(403).send({ message: "Tipo de usuário não autorizado" });
+    }
 
     return next();
   } catch (error) {

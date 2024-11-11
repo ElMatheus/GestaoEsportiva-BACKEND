@@ -151,7 +151,7 @@ export const loginUser = async (req, res) => {
       return res.status(401).send({status: "error", message: "Nome ou senha inválidos" });
     }
     // geracao do acess token
-    const token = sign({}, '8d59240f-7a89-4817-bfb0-2d0d5e717ed3', {
+    const token = sign({type: user.tipo}, '8d59240f-7a89-4817-bfb0-2d0d5e717ed3', {
       subject: user.id,
       expiresIn: '15m'
     });
