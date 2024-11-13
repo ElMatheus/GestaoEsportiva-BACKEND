@@ -51,7 +51,7 @@ export const getFeedbackById = async (req, res) => {
 export const updateFeedback = async (req, res) => {
     try {
         const { id } = req.params;
-        const { nome_usuario, comentario, nota, resposta } = req.body;
+        const { resposta } = req.body;
 
         const feedback = await feedbackRepository.getFeedbackById(id);
 
@@ -59,7 +59,7 @@ export const updateFeedback = async (req, res) => {
             return res.status(404).send({ message: "Feedback não encontrado" });
         }
 
-        const updateFeedback = await feedbackRepository.updateFeedback(id, nome_usuario, comentario, nota, resposta);
+        const updateFeedback = await feedbackRepository.updateFeedback(id, resposta);
 
         return res.status(200).send(updateFeedback);
     } catch (error) {

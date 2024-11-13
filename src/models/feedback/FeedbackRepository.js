@@ -38,7 +38,7 @@ export default class FeedbackRepository {
         }
     }
 
-    async updateFeedback(id, nome_usuario, comentario, nota, data, resposta) {
+    async updateFeedback(id, resposta) {
         try {
             const feedback = this.getFeedbackById(id);
 
@@ -47,8 +47,8 @@ export default class FeedbackRepository {
             }
 
             const updateFeedback = await this.pg.oneOrNone(
-                "UPDATE feedback SET nome_usuario = $1, comentario = $2, nota = $3, data = $4, reposta = $5 WHERE id = $6 RETURNING *",
-                [nome_usuario, comentario, nota, data, resposta, id]
+                "UPDATE feedback SET resposta = $1 WHERE id = $2 RETURNING *",
+                [resposta, id]
             );
 
             return updateFeedback;
