@@ -13,6 +13,9 @@ const refreshRepository = new RefreshRepository();
 export const getUsers = async (req, res) => {
   try {
     const users = await usersRepository.getUsers();
+
+    // token
+    
     // verificacao se tem usuarios cadastrados
     if (!users) {
       return res.status(404).send({ message: "Não há usuários cadastrados" });
