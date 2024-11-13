@@ -71,4 +71,13 @@ export default class UsersRepository {
       throw error;
     }
   }
+
+  async logoutUser(id) {
+    try {
+      await this.pg.none("DELETE FROM refresh_token WHERE user_id = $1", id);
+    } catch (error) {
+      throw error;
+    }
+  }
+
 };

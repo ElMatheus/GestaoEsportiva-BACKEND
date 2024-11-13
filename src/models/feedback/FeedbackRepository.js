@@ -7,11 +7,12 @@ export default class FeedbackRepository {
 
     async createFeedback(feedback) {
         try {
-            await this.pg.none("INSERT INTO feedback (nome_usuario, comentario, nota, data) VALUES ($1, $2, $3, $4)", [
+            await this.pg.none("INSERT INTO feedback (nome_usuario, comentario, nota, data, resposta) VALUES ($1, $2, $3, $4, $5)", [
                 feedback.nome_usuario,
                 feedback.comentario,
                 feedback.nota,
-                feedback.data
+                feedback.data,
+                feedback.resposta
             ]);
             return feedback;
         } catch (error) {
@@ -37,7 +38,7 @@ export default class FeedbackRepository {
         }
     }
 
-    async updateFeedback(id, nome_usuario, comentario, nota, data) {
+    async updateFeedback(id, nome_usuario, comentario, nota, data, resposta) {
         try {
             const feedback = this.getFeedbackById(id);
 
@@ -46,8 +47,8 @@ export default class FeedbackRepository {
             }
 
             const updateFeedback = await this.pg.oneOrNone(
-                "UPDATE feedback SET nome_usuario = $1, comentario = $2, nota = $3, data = $4 WHERE id = $5 RETURNING *",
-                [nome_usuario, comentario, nota, data, id]
+                "UPDATE feedback SET nome_usuario = $1, comentario = $2, nota = $3, data = $4, reposta = $5 WHERE id = $6 RETURNING *",
+                [nome_usuario, comentario, nota, data, resposta, id]
             );
 
             return updateFeedback;

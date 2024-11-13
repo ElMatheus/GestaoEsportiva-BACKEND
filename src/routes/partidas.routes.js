@@ -12,7 +12,7 @@ import { ensureAuthenticated } from "../middlewares/ensureAuthenticated.js";
 
 const confrontosRouter = Router();
 
-confrontosRouter.post("/", ensureAuthenticated, createPartida);
+confrontosRouter.post("/", createPartida);
 confrontosRouter.get("/", getPartidas);
 confrontosRouter.get("/confrontos", getPartidaAndConfrontos);
 confrontosRouter.get("/:id", getPartidaById);
