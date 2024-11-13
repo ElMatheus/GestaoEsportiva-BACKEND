@@ -15,13 +15,13 @@ export const getUsers = async (req, res) => {
     const users = await usersRepository.getUsers();
 
     // token
-    
+
     // verificacao se tem usuarios cadastrados
     if (!users) {
       return res.status(404).send({ message: "Não há usuários cadastrados" });
     }
     return res.json({
-      status: "success",
+      status: "sucess",
       message: "Usuários listados com sucesso",
       total: users.length,
       data: users
@@ -145,16 +145,16 @@ export const loginUser = async (req, res) => {
     const user = await usersRepository.getUserByName(nome);
     // verificacao se usuario existe pelo nome
     if (!user) {
-      return res.status(404).send({status: "error", message: "Usuário não encontrado" });
+      return res.status(404).send({ status: "error", message: "Usuário não encontrado" });
     }
     // comparacao de senha com hash
     const passwordMatch = await compare(senha, user.senha);
     // se tiver erro na senha retorna isso
     if (!passwordMatch) {
-      return res.status(401).send({status: "error", message: "Nome ou senha inválidos" });
+      return res.status(401).send({ status: "error", message: "Nome ou senha inválidos" });
     }
     // geracao do acess token
-    const token = sign({type: user.tipo}, '8d59240f-7a89-4817-bfb0-2d0d5e717ed3', {
+    const token = sign({ type: user.tipo }, '8d59240f-7a89-4817-bfb0-2d0d5e717ed3', {
       subject: user.id,
       expiresIn: '15m'
     });
@@ -198,13 +198,13 @@ export const logout = async (req, res) => {
       return res.status(400).send({ message: "Token de refresh é necessário" });
     }
 
-    const token = await refreshRepository.getToken(refreshToken);
+    const token = await refreshRepository.getRefreshTokenById(refreshToken);
 
     if (!token) {
       return res.status(404).send({ message: "Token de refresh não encontrado" });
     }
 
-    await refreshRepository.deleteToken(refreshToken);
+    await refreshRepository.deleteRefreshToken(refreshToken);
 
     return res.status(200).send({ message: "Logout realizado com sucesso" });
   } catch (error) {

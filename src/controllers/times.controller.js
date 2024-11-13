@@ -11,7 +11,7 @@ export const createTimes = async (req, res) => {
 
         await timesRepository.createTime(times);
 
-        return res.status(201).send(times);
+        return res.status(201).send({status: "sucess", message: "Time criado com sucesso", times});
     } catch (error) {
         return res.status(500).send({ message: "Erro ao criar time", error: error.message });
     }
@@ -46,7 +46,7 @@ export const getTimes = async (req, res) => {
         }
         );
         return res.json({
-            status: "success",
+            status: "sucess",
             message: "Times listados com sucesso",
             total: timesJogadores.length,
             data: timesJogadores
@@ -89,7 +89,7 @@ export const getTimesById = async (req, res) => {
         }));
 
         return res.json({
-            status: "success",
+            status: "sucess",
             message: "Times listados com sucesso",
             data: times
         })

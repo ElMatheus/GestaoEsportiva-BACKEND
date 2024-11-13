@@ -25,6 +25,6 @@ usersRouter.put("/:id", ensureAuthenticated('admin'), updateUser);
 usersRouter.delete("/:id", ensureAuthenticated('admin'), deleteUser);
 usersRouter.post("/login", loginUser);
 usersRouter.post("/refresh", refresh);
-usersRouter.post("/logout", logout);
+usersRouter.delete("/logout", logout);
 
 export default usersRouter;

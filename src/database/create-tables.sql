@@ -10,7 +10,8 @@ CREATE TABLE IF NOT EXISTS feedback (
     nome_usuario VARCHAR(100) NOT NULL,
     comentario TEXT NOT NULL,
     nota INT DEFAULT(0) NOT NULL,
-    data DATE DEFAULT CURRENT_DATE NOT NULL
+    data DATE DEFAULT CURRENT_DATE NOT NULL,
+    resposta TEXT DEFAULT('') 
 );
 
 CREATE TABLE IF NOT EXISTS modalidade (
