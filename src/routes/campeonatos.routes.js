@@ -19,7 +19,7 @@ campeonatosRouter.get("/:id", getCampeonatoById);
 campeonatosRouter.get("/titulo/:titulo", getCampeonatoByTitulo);
 campeonatosRouter.get("/date/:date", getCampeonatoByDate);
 campeonatosRouter.post("/", ensureAuthenticated('admin'), createCampeonato);
-campeonatosRouter.put("/:id", updateCampeonato('admin'));
+campeonatosRouter.put("/:id", ensureAuthenticated('admin'));
 campeonatosRouter.delete("/:id", deleteCampeonato);
 campeonatosRouter.get("/duration/:id", getDurationCampeonato);
 
