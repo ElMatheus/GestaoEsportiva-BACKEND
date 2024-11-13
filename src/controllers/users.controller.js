@@ -185,3 +185,27 @@ export const refresh = async (req, res) => {
     return res.status(500).send({ message: "Erro ao realizar refresh", error: error.message });
   }
 };
+
+// função de logout
+export const logout = async (req, res) => {
+  try {
+    const { refreshToken } = req.body;
+
+    if (!refreshToken) {
+      return res.status(400).send({ message: "Token de refresh é necessário" });
+    }
+
+    const token = await refreshRepository.getToken(refreshToken);
+
+    if (!token) {
+      return res.status(404).send({ message: "Token de refresh não encontrado" });
+    }
+
+    await refreshRepository.deleteToken(refreshToken);
+
+    return res.status(200).send({ message: "Logout realizado com sucesso" });
+  } catch (error) {
+    return res.status(500).send({ message: "Erro ao realizar logout", error: error.message });
+  }
+};
+

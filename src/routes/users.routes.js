@@ -1,5 +1,6 @@
 import { Router } from "express";
 
+
 import {
   getUsers,
   getUserById,
@@ -9,6 +10,7 @@ import {
   deleteUser,
   loginUser,
   refresh,
+  logout,
 } from "../controllers/users.controller.js";
 import { ensureAuthenticated } from "../middlewares/ensureAuthenticated.js";
 
@@ -23,5 +25,6 @@ usersRouter.put("/:id", updateUser);
 usersRouter.delete("/:id", deleteUser);
 usersRouter.post("/login", loginUser);
 usersRouter.post("/refresh", refresh);
+usersRouter.post("/logout", logout);
 
 export default usersRouter;
