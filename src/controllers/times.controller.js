@@ -121,11 +121,11 @@ export const getTimesByModalidadeID = async (req, res) => {
 
         const times = await timesRepository.getTimeByModalidadeID(modalidade_id);
 
-        // if (!times) {
-        //     return res.status(404).send({ message: "Time não encontrado" });
-        // }
+        if (times.length === 0) {
+            return res.status(404).send({status: "error", message: "Times não encontrados"});
+        }
 
-        return res.status(200).send(times);
+        return res.status(200).send({status: "sucess", message: "Times listados com sucesso", times});
     } catch (error) {
         return res.status(500).send({ message: "Erro ao buscar time", error: error.message });
     }
