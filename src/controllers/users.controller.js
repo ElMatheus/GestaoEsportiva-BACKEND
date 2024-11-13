@@ -18,7 +18,7 @@ export const getUsers = async (req, res) => {
       return res.status(404).send({ message: "Não há usuários cadastrados" });
     }
     return res.json({
-      status: "success",
+      status: "sucess",
       message: "Usuários listados com sucesso",
       total: users.length,
       data: users

@@ -15,7 +15,7 @@ export const createCampeonato = async (req, res) => {
         
         await campeonatosRepository.createCampeonato(campeonato);
 
-        return res.status(201).send({status: "sucess", campeonato});
+        return res.status(201).send({status: "sucess", message: "Campeonato criado com sucesso!", campeonato});
     } catch (error) {
         return res.status(500).send({ message: "Erro ao criar campeonato", error: error.message });
     }
