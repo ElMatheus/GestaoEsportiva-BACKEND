@@ -6,6 +6,16 @@ export default class RefreshRepository {
     this.pg = pg;
   }
 
+  async getRefreshTokenById(id) {
+    try {
+      const token = await this.pg.oneOrNone("SELECT * FROM refresh_token WHERE id = $1", id);
+      return token;
+    }
+    catch (error) {
+      throw error;
+    }
+  }
+
   async createRefreshToken(token) {
     try {
       await this.pg.none("INSERT INTO refresh_token (id, user_id, expiresIn) VALUES ($1, $2, $3)", [
@@ -42,11 +52,11 @@ export default class RefreshRepository {
     }
   }
 
-  // async deleteRefreshToken(refreshToken) {
-  //   try {
-  //     await this.pg.none("DELETE FROM refresh_tokens WHERE token = $1", refreshToken);
-  //   } catch (error) {
-  //     throw error;
-  //   }
-  // }
+  async deleteRefreshToken(refreshToken) {
+    try {
+      await this.pg.none("DELETE FROM refresh_tokens WHERE token = $1", refreshToken);
+    } catch (error) {
+      throw error;
+    }
+  }
 }

@@ -16,7 +16,7 @@ jogadorRouter.get("/", getJogadores);
 jogadorRouter.get("/:id", getJogadorById);
 jogadorRouter.get("/time/:time_id", getJogadorByTimeID);
 jogadorRouter.get("/sala/:sala", getJogadorBySala);
-jogadorRouter.post("/", ensureAuthenticated, createJogador);
-jogadorRouter.put("/:id", ensureAuthenticated, updateJogador);
+jogadorRouter.post("/", ensureAuthenticated('organizador'), createJogador);
+jogadorRouter.put("/:id", ensureAuthenticated('organizador'), updateJogador);
 
 export default jogadorRouter;

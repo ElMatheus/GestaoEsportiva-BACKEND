@@ -47,7 +47,7 @@ export const getPartidaAndConfrontos = async (req, res) => {
             return partida;
         });
         return res.json({
-            status: "success",
+            status: "sucess",
             message: "Partida encontrada",
             total: confrontosDaPartida.length,
             data: confrontosDaPartida
@@ -98,7 +98,7 @@ export const getPartidaById = async (req, res) => {
         }));
 
         return res.json({
-            status: "success",
+            status: "sucess",
             message: "Partida encontrada",
             data: partida
         });

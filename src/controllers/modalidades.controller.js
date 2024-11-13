@@ -9,7 +9,7 @@ export const createModalidade = async (req, res) => {
     const modalidade = new Modalidade(nome, descricao, limite_pessoas, campeonato_id, valor_por_pessoa, tipo);
     await modalidadeRepository.createModalidade(modalidade);
     return res.status(201).send({
-      status: "success",
+      status: "sucess",
       message: "Modalidade criada com sucesso",
       modalidades: modalidade
     });
@@ -37,7 +37,7 @@ export const getModalidades = async (req, res) => {
     });
 
     return res.json({
-      status: "success",
+      status: "sucess",
       message: "Modalidades listadas com sucesso",
       total: modalidadesTimes.length,
       data: modalidadesTimes
@@ -67,7 +67,7 @@ export const getModalidadeById = async (req, res) => {
     }));
 
     return res.json({
-      status: "success",
+      status: "sucess",
       message: "Time listado com sucesso",
       data: modalidade
     })

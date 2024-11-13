@@ -12,7 +12,7 @@ export const createJogador = async (req, res) => {
         await jogadorRepository.createJogador(jogador);
 
         return res.json({
-            status: "success",
+            status: "sucess",
             message: "Jogador criado com sucesso",
             data: jogador
         })
@@ -27,7 +27,7 @@ export const getJogadores = async (req, res) => {
         const jogadores = await jogadorRepository.getAllJogadores();
 
         res.json({
-            status: "success",
+            status: "sucess",
             message: "Jogadores listados com sucesso",
             total: jogadores.length,
             data: jogadores
