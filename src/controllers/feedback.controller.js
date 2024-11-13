@@ -5,7 +5,7 @@ const feedbackRepository = new FeedbackRepository();
 
 export const createFeedback = async (req, res) => {
     try {
-        const { nome_usuario, comentario, nota } = req.body;
+        const { nome_usuario, comentario, nota, resposta } = req.body;
 
         if (!nome_usuario || !comentario || !nota) {
             return res.status(400).send({ message: "Dados obrigatórios faltando" });
@@ -15,7 +15,7 @@ export const createFeedback = async (req, res) => {
             return res.status(400).send({ message: "Nota deve ser entre 1 e 5" });
         }
 
-        const feedback = new Feedback(nome_usuario, comentario, nota);
+        const feedback = new Feedback(nome_usuario, comentario, nota, resposta);
 
         await feedbackRepository.createFeedback(feedback);
 
@@ -51,7 +51,7 @@ export const getFeedbackById = async (req, res) => {
 export const updateFeedback = async (req, res) => {
     try {
         const { id } = req.params;
-        const { nome_usuario, comentario, nota } = req.body;
+        const { nome_usuario, comentario, nota, resposta } = req.body;
 
         const feedback = await feedbackRepository.getFeedbackById(id);
 
@@ -59,7 +59,7 @@ export const updateFeedback = async (req, res) => {
             return res.status(404).send({ message: "Feedback não encontrado" });
         }
 
-        const updateFeedback = await feedbackRepository.updateFeedback(id, nome_usuario, comentario, nota);
+        const updateFeedback = await feedbackRepository.updateFeedback(id, nome_usuario, comentario, nota, resposta);
 
         return res.status(200).send(updateFeedback);
     } catch (error) {
