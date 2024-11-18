@@ -177,8 +177,11 @@ export const refresh = async (req, res) => {
     if (!token) {
       return res.status(404).send({ message: "Token inválido ou expirado" });
     }
+
+    const {tipo} = await usersRepository.getUserById(token.user_id);
+    
     // geracao de novo acess token
-    const newToken = sign({}, '8d59240f-7a89-4817-bfb0-2d0d5e717ed3', {
+    const newToken = sign({type: tipo}, '8d59240f-7a89-4817-bfb0-2d0d5e717ed3', {
       subject: token.user_id,
       expiresIn: '15m'
     });
