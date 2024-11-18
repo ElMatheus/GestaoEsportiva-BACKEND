@@ -54,7 +54,7 @@ export default class RefreshRepository {
 
   async deleteRefreshToken(refreshToken) {
     try {
-      await this.pg.none("DELETE FROM refresh_tokens WHERE token = $1", refreshToken);
+      await this.pg.none("DELETE FROM refresh_token WHERE id = $1", refreshToken);
     } catch (error) {
       throw error;
     }

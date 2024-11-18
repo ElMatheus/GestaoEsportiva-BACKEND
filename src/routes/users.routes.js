@@ -16,15 +16,15 @@ import { ensureAuthenticated } from "../middlewares/ensureAuthenticated.js";
 
 const usersRouter = Router();
 
-usersRouter.get("/", ensureAuthenticated('admin'), getUsers);
+usersRouter.get("/", getUsers);
 usersRouter.get("/:id", getUserById);
 usersRouter.get("/nome/:nome", getUserByName);
 usersRouter.post("/", createUser);
 
-usersRouter.put("/:id", ensureAuthenticated('admin'), updateUser);
-usersRouter.delete("/:id", ensureAuthenticated('admin'), deleteUser);
+usersRouter.put("/:id", updateUser);
+usersRouter.delete("/:id", deleteUser);
 usersRouter.post("/login", loginUser);
 usersRouter.post("/refresh", refresh);
-usersRouter.delete("/logout", logout);
+usersRouter.delete("/logout/:logout", logout);
 
 export default usersRouter;
