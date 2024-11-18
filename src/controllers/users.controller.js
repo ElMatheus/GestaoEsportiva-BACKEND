@@ -162,7 +162,7 @@ export const loginUser = async (req, res) => {
     const generateRefreshToken = new Refresh(user.id);
     const refreshToken = await refreshRepository.createRefreshToken(generateRefreshToken);
 
-    return res.status(200).send({ user, token: token, refreshToken });
+    return res.status(200).send({ status: "sucess", message: "Login realizado com sucesso", user, token: token, refreshToken });
   } catch (error) {
     return res.status(500).send({ message: "Erro ao realizar login", error: error.message });
   }
