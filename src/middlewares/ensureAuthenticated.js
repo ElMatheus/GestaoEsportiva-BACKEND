@@ -15,10 +15,11 @@ export const ensureAuthenticated = (access) => {
       const decoded = verify(token, '8d59240f-7a89-4817-bfb0-2d0d5e717ed3');
 
       // Verificação de tipo de usuário
-      console.log(access);
-      console.log(decoded.type);
-      
-      if (access === "organizador" && decoded.type !== 'organizador' || decoded.type !== 'admin') {
+      if (access === "admin" && decoded.type !== 'admin') {
+        return res.status(401).send({ message: "Acesso não autorizado" });
+      }
+
+      if (access === "organizador" && decoded.type !== 'organizador' && decoded.type !== 'admin') {
         return res.status(401).send({ message: "Acesso não autorizado" });
       }
 

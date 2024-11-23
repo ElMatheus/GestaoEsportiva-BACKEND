@@ -22,7 +22,7 @@ timeRouter.post("/", ensureAuthenticated('organizador'), createTimes);
 timeRouter.put("/:id", ensureAuthenticated('organizador'), updateTimes);
 timeRouter.get("/modalidade/:modalidade_id", getTimesByModalidadeID);
 timeRouter.get("/campeonato/:campeonato_id", getTimesByCampeonatoID);
-timeRouter.get("/sala/:sala", getTimesBySala);  
+timeRouter.get("/sala/:sala", getTimesBySala);
 timeRouter.delete("/:id", ensureAuthenticated('admin'), deleteTimes);
 
 export default timeRouter;
