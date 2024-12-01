@@ -70,7 +70,7 @@ export const getPartidaAndConfrontosBymodalidade = async (req, res) => {
 
         const confrontosDaPartida = partidas.map(partida => {
             partida.confrontos = confrontos.filter(confronto => confronto.id_partida == partida.id).map(confronto => ({
-                partidaid: confronto.confronto_id,
+                confrontoid: confronto.confronto_id,
                 timeid: confronto.timeid,
                 winner: confronto.winner,
                 tie: confronto.tie,
