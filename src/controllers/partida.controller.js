@@ -43,7 +43,7 @@ export const getPartidaAndConfrontos = async (req, res) => {
                 timeid: confronto.timeid,
                 winner: confronto.winner,
                 tie: confronto.tie,
-                time : {
+                time: {
                     nome: confronto.nome_time,
                     modalidade_id: confronto.modalidade_id_time
                 }
@@ -61,6 +61,39 @@ export const getPartidaAndConfrontos = async (req, res) => {
         return res.status(500).send({ message: "Erro ao buscar partidas", error: error.message });
     }
 }
+
+export const getPartidaAndConfrontosBymodalidade = async (req, res) => {
+    try {
+        const { modalidade_id } = req.params;
+        const partidas = await partidasRepository.getPartidas();
+        const confrontos = await partidasRepository.getPartidaAndConfrontosBymodalidade(modalidade_id);
+
+        const confrontosDaPartida = partidas.map(partida => {
+            partida.confrontos = confrontos.filter(confronto => confronto.id_partida == partida.id).map(confronto => ({
+                id: confronto.confronto_id,
+                timeid: confronto.timeid,
+                winner: confronto.winner,
+                tie: confronto.tie,
+                time: {
+                    nome: confronto.nome_time,
+                    modalidade_id: confronto.modalidade_id_time
+                }
+            })
+            );
+            return partida;
+        }
+        );
+        return res.json({
+            status: "sucess",
+            message: "Partida encontrada",
+            total: confrontosDaPartida.length,
+            data: confrontosDaPartida
+        });
+    } catch (error) {
+        return res.status(500).send({ message: "Erro ao buscar partidas", error: error.message });
+    }
+}
+
 export const createPartida = async (req, res) => {
     try {
         const { data, anotacao, updateUser } = req.body;

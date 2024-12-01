@@ -25,6 +25,23 @@ export default class PartidaRepository {
     }
   };
 
+  async getPartidaAndConfrontosBymodalidade(modalidade_id) {
+    try {
+        const PartidaPorConfronto = await this.pg.manyOrNone(
+            `SELECT partida.id AS id_partida, partida.data AS data_da_partida, partida.anotacao AS anotacao_da_partida, 
+                    confronto.id AS confronto_id, confronto.timeId, confronto.winner, confronto.tie, 
+                    times.nome AS nome_time, times.modalidade_id AS modalidade_id_time 
+             FROM partida 
+             INNER JOIN confronto ON partida.id = confronto.idPartida
+             INNER JOIN times ON confronto.timeId = times.id
+             WHERE times.modalidade_id = $1`, modalidade_id
+        );
+        return PartidaPorConfronto;
+    } catch (error) {
+        throw error;
+    }
+  }
+
   async createPartida(partida) {
     const newPartida = await this.pg.one(
       "INSERT INTO partida (data, anotacao, updAtDate, updAtIdUser) VALUES ($1, $2, $3, $4) RETURNING *",
