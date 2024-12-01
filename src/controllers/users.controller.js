@@ -156,7 +156,7 @@ export const loginUser = async (req, res) => {
     // geracao do acess token
     const token = sign({ type: user.tipo }, '8d59240f-7a89-4817-bfb0-2d0d5e717ed3', {
       subject: user.id,
-      expiresIn: '15m'
+      expiresIn: '2h'
     });
     // geracao do refresh token
     const generateRefreshToken = new Refresh(user.id);
@@ -183,7 +183,7 @@ export const refresh = async (req, res) => {
     // geracao de novo acess token
     const newToken = sign({type: tipo}, '8d59240f-7a89-4817-bfb0-2d0d5e717ed3', {
       subject: token.user_id,
-      expiresIn: '15m'
+      expiresIn: '2h'
     });
 
     return res.status(200).send({ token: newToken, user_id: token.user_id });

@@ -42,8 +42,13 @@ export const getPartidaAndConfrontos = async (req, res) => {
                 id: confronto.confronto_id,
                 timeid: confronto.timeid,
                 winner: confronto.winner,
-                tie: confronto.tie
-            }));
+                tie: confronto.tie,
+                time : {
+                    nome: confronto.nome_time,
+                    modalidade_id: confronto.modalidade_id_time
+                }
+            })
+            );
             return partida;
         });
         return res.json({
