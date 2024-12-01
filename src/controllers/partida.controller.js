@@ -78,13 +78,12 @@ export const getPartidaAndConfrontosBymodalidade = async (req, res) => {
                     nome: confronto.nome_time,
                     modalidade_id: confronto.modalidade_id_time
                 }
-            })
-            );
-            return partida;
-        }
-        );
+            }));
+            return partida.confrontos.length > 0 ? partida : null;
+        }).filter(partida => partida != null);
+
         return res.json({
-            status: "sucess",
+            status: "success",
             message: "Partida encontrada",
             total: confrontosDaPartida.length,
             data: confrontosDaPartida
@@ -92,7 +91,7 @@ export const getPartidaAndConfrontosBymodalidade = async (req, res) => {
     } catch (error) {
         return res.status(500).send({ message: "Erro ao buscar partidas", error: error.message });
     }
-}
+};
 
 export const createPartida = async (req, res) => {
     try {
