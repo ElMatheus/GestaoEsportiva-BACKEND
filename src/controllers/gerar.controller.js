@@ -21,8 +21,6 @@ export const gerarTodosConfrontos = async (req, res) => {
 
         const confrontos = [];
 
-        console.log(modalidade);
-        
 
         if (modalidade.tipo === false) {
             // 3. Gerar confrontos todos contra todos com dados dos times
