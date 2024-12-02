@@ -74,7 +74,7 @@ CREATE TABLE IF NOT EXISTS confronto (
     tie BOOLEAN DEFAULT FALSE,
     updAtDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updAtIdUser VARCHAR(100),
-    FOREIGN KEY (idPartida) REFERENCES partida(id),
+    FOREIGN KEY (idPartida) REFERENCES partida(id) ON DELETE CASCADE,
     FOREIGN KEY (timeId) REFERENCES times(id),
     FOREIGN KEY (updAtIdUser) REFERENCES users(id)
 );  
