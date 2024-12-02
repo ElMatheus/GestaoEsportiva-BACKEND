@@ -7,6 +7,6 @@ import { ensureAuthenticated } from "../middlewares/ensureAuthenticated.js";
 
 const gerarRouter = Router();
 
-gerarRouter.get("/", ensureAuthenticated('admin'), gerarTodosConfrontos);
+gerarRouter.post("/", ensureAuthenticated('admin'), gerarTodosConfrontos);
 
 export default gerarRouter;
