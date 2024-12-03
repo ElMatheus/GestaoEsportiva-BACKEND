@@ -11,7 +11,7 @@ export const createTimes = async (req, res) => {
 
         await timesRepository.createTime(times);
 
-        return res.status(201).send({status: "sucess", message: "Time criado com sucesso", times});
+        return res.status(201).send({ status: "sucess", message: "Time criado com sucesso", times });
     } catch (error) {
         return res.status(500).send({ message: "Erro ao criar time", error: error.message });
     }
@@ -30,7 +30,7 @@ export const getTimes = async (req, res) => {
 
             return res.status(200).send(times);
         }
-        
+
         const times = await timesRepository.getAllTimes();
         const jogadores = await timesRepository.getJogadoresPorTime();
 
@@ -122,10 +122,10 @@ export const getTimesByModalidadeID = async (req, res) => {
         const times = await timesRepository.getTimeByModalidadeID(modalidade_id);
 
         if (times.length === 0) {
-            return res.status(404).send({status: "error", message: "Times não encontrados"});
+            return res.status(404).send({ status: "error", message: "Times não encontrados" });
         }
 
-        return res.status(200).send({status: "sucess", message: "Times listados com sucesso", times});
+        return res.status(200).send({ status: "sucess", message: "Times listados com sucesso", times });
     } catch (error) {
         return res.status(500).send({ message: "Erro ao buscar time", error: error.message });
     }
@@ -199,7 +199,7 @@ export const deleteTimes = async (req, res) => {
 
         await timesRepository.deleteTime(id);
 
-        return res.status(200).send({ message: "Time deletado" });
+        return res.status(200).send({ status: "sucess", message: "Time deletado com sucesso" });
     } catch (error) {
         return res.status(500).send({ message: "Erro ao deletar time", error: error.message });
     }
