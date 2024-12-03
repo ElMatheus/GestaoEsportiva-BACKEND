@@ -21,7 +21,8 @@ CREATE TABLE IF NOT EXISTS feedback (
     nome_usuario VARCHAR(100) NOT NULL,
     comentario TEXT NOT NULL,
     nota INT DEFAULT(0) NOT NULL,
-    resposta TEXT DEFAULT('')
+    data DATE DEFAULT CURRENT_DATE NOT NULL,
+    resposta TEXT DEFAULT('') 
 );
 
 CREATE TABLE IF NOT EXISTS modalidade (
@@ -50,7 +51,8 @@ id VARCHAR(100) PRIMARY KEY NOT NULL,
 nome VARCHAR(100) NOT NULL,
 sala VARCHAR(100) NOT NULL,
 time_id VARCHAR(100) NOT NULL,
-FOREIGN KEY(time_id) REFERENCES times(id));
+FOREIGN KEY(time_id) REFERENCES times(id) ON DELETE CASCADE
+);
 
 
 CREATE TABLE IF NOT EXISTS users (
@@ -84,7 +86,7 @@ CREATE TABLE IF NOT EXISTS confronto (
     tie BOOLEAN DEFAULT FALSE,
     updAtDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updAtIdUser VARCHAR(100),
-    FOREIGN KEY (idPartida) REFERENCES partida(id),
+    FOREIGN KEY (idPartida) REFERENCES partida(id) ON DELETE CASCADE,
     FOREIGN KEY (timeId) REFERENCES times(id),
     FOREIGN KEY (updAtIdUser) REFERENCES users(id)
 );  
