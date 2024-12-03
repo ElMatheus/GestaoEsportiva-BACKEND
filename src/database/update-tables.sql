@@ -89,4 +89,4 @@ CREATE TABLE IF NOT EXISTS confronto (
     FOREIGN KEY (idPartida) REFERENCES partida(id) ON DELETE CASCADE,
     FOREIGN KEY (timeId) REFERENCES times(id),
     FOREIGN KEY (updAtIdUser) REFERENCES users(id)
-);  
+);
