@@ -57,6 +57,14 @@ export default class ConfrontosRepository {
         }
     };
 
+    async getWinnerCountByTimeId(timeId) {
+        try {
+            const count = await this.pg.one("SELECT COUNT(*) FROM confronto WHERE timeId = $1 AND winner = true", [timeId]);
+            return count.count;
+        } catch (error) {
+            throw error;
+        }
+    }
 
     async createConfronto(confronto) {
         try {
@@ -87,4 +95,6 @@ export default class ConfrontosRepository {
             throw error;
         }
     }
+
+    
 }
