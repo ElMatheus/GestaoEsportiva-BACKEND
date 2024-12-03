@@ -5,6 +5,7 @@ import {
     getConfrontoById,
     getConfrontosByIdPartida,
     getConfrontoWinnerByModalidade,
+    getWinnerCountByTimeId,
     createConfronto,
     updateConfronto,
     deleteConfronto,
@@ -17,6 +18,7 @@ confrontosRouter.get("/", getAllConfrontos);
 confrontosRouter.get("/:id", getConfrontoById);
 confrontosRouter.get("/partida/:id", getConfrontosByIdPartida);
 confrontosRouter.get("/modalidade/:id", getConfrontoWinnerByModalidade);
+confrontosRouter.get("/time/:timeId", getWinnerCountByTimeId);
 confrontosRouter.post("/", ensureAuthenticated('organizador'), createConfronto);
 confrontosRouter.put("/:id", ensureAuthenticated('organizador'), updateConfronto);
 confrontosRouter.delete("/:id", ensureAuthenticated('organizador'), deleteConfronto);

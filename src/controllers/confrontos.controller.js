@@ -60,6 +60,20 @@ export const getConfrontoWinnerByModalidade = async (req, res) => {
     }
 }
 
+export const getWinnerCountByTimeId = async (req, res) => {
+    try {
+        const { timeId } = req.params;
+
+        const confrontos = await confrontoRepository.getWinnerCountByTimeId(timeId);
+
+        return res.status(200).send(confrontos);
+    }
+    catch (error) {
+        return res.status(500).send({ message: "Erro ao buscar confrontos", error: error.message });
+    }
+}
+
+
 export const createConfronto = async (req, res) => {
     try {
         const { idPartida, timeId, winner, tie, updAtIdUser } = req.body;
