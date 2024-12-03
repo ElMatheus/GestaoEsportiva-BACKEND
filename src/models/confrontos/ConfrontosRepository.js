@@ -48,6 +48,15 @@ export default class ConfrontosRepository {
         }
     };
 
+    async getConfrontoWinnerByModalidade(id) {
+        try {
+            const confrontos = await this.pg.manyOrNone("SELECT * FROM confronto LEFT JOIN times ON confronto.timeId = times.id WHERE times.modalidade_id = $1 AND winner = true", id);
+            return confrontos;
+        } catch (error) {
+            throw error;
+        }
+    };
+
 
     async createConfronto(confronto) {
         try {

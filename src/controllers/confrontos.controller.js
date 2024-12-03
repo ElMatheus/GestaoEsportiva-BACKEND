@@ -1,6 +1,6 @@
 import Confronto from "../models/confrontos/Confronto.js";
 import ConfrontosRepository from "../models/confrontos/ConfrontosRepository.js";
-import PartidaRepository from "../models/partida/PartidaRepository.js"; 
+import PartidaRepository from "../models/partida/PartidaRepository.js";
 import TimesRepository from '../models/times/TimesRepository.js';
 
 const confrontoRepository = new ConfrontosRepository();
@@ -37,6 +37,23 @@ export const getConfrontosByIdPartida = async (req, res) => {
         const confrontos = await confrontoRepository.getConfrontosByIdPartida(id);
 
         return res.status(200).send(confrontos);
+    }
+    catch (error) {
+        return res.status(500).send({ message: "Erro ao buscar confrontos", error: error.message });
+    }
+}
+
+export const getConfrontoWinnerByModalidade = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const confrontos = await confrontoRepository.getConfrontoWinnerByModalidade(id);
+
+        if (confrontos.length === 0) {
+            return res.status(404).send({ status: "error", message: "Confrontos não encontrados" });
+        }
+
+        return res.status(200).send({ status: "sucess", confrontos });
     }
     catch (error) {
         return res.status(500).send({ message: "Erro ao buscar confrontos", error: error.message });
@@ -82,7 +99,7 @@ export const updateConfronto = async (req, res) => {
 
         await confrontoRepository.updateConfronto(confrontoObj, id);
 
-        return res.status(200).send(confrontoObj);
+        return res.status(200).send({ status: "sucess", message: "Confronto atualizado com sucesso", confronto: confrontoObj });
     } catch (error) {
         return res.status(500).send({ message: "Erro ao atualizar confronto", error: error.message });
     }
@@ -105,7 +122,3 @@ export const deleteConfronto = async (req, res) => {
         return res.status(500).send({ message: "Erro ao deletar confronto", error: error.message });
     }
 };
-
-
-
-

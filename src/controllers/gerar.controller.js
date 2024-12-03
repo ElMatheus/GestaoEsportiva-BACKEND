@@ -63,6 +63,8 @@ export const gerarTodosConfrontos = async (req, res) => {
                 id: confronto.id,
                 idPartida: confronto.idPartida,
                 timeId: confronto.timeA ? confronto.timeA.id : confronto.time.id,
+                winner: false,
+                tie: false,
                 updAtIdUser: updateUser
             });
             if (confronto.timeB) {
@@ -70,6 +72,8 @@ export const gerarTodosConfrontos = async (req, res) => {
                     id: uuidv4(),
                     idPartida: confronto.idPartida,
                     timeId: confronto.timeB.id,
+                    winner: false,
+                    tie: false,
                     updAtIdUser: updateUser
                 });
             }
