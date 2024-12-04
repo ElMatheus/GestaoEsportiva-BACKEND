@@ -17,6 +17,20 @@ export const getAllConfrontos = async (req, res) => {
     }
 };
 
+export const getTopWinningTeamsByChampionship = async (req, res) => {
+    try {
+        const topTeams = await confrontoRepository.getTopWinningTeamsByChampionship();
+
+        return res.json({
+            status: "success",
+            message: "Top times vencedores por campeonato",
+            data: topTeams
+        });
+    } catch (error) {
+        return res.status(500).send({ message: "Erro ao buscar confrontos", error: error.message });
+    }
+};
+
 export const getConfrontoById = async (req, res) => {
     try {
         const { id } = req.params;
@@ -42,6 +56,8 @@ export const getConfrontosByIdPartida = async (req, res) => {
         return res.status(500).send({ message: "Erro ao buscar confrontos", error: error.message });
     }
 }
+
+    
 
 export const getConfrontoWinnerByModalidade = async (req, res) => {
     try {

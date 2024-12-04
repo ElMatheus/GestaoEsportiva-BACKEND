@@ -2,19 +2,21 @@ import { Router } from "express";
 
 import {
     getAllConfrontos,
+    getTopWinningTeamsByChampionship,
     getConfrontoById,
     getConfrontosByIdPartida,
     getConfrontoWinnerByModalidade,
     getWinnerCountByTimeId,
     createConfronto,
     updateConfronto,
-    deleteConfronto,
+    deleteConfronto
 } from "../controllers/confrontos.controller.js";
 import { ensureAuthenticated } from "../middlewares/ensureAuthenticated.js";
 
 const confrontosRouter = Router();
 
 confrontosRouter.get("/", getAllConfrontos);
+confrontosRouter.get("/top", getTopWinningTeamsByChampionship);
 confrontosRouter.get("/:id", getConfrontoById);
 confrontosRouter.get("/partida/:id", getConfrontosByIdPartida);
 confrontosRouter.get("/modalidade/:id", getConfrontoWinnerByModalidade);

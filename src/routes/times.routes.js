@@ -19,7 +19,7 @@ timeRouter.get("/", getTimes);
 timeRouter.get("/jogadores", getTimesAndJogadores);
 timeRouter.get("/:id", getTimesById);
 timeRouter.post("/", ensureAuthenticated('organizador'), createTimes);
-timeRouter.put("/:id", ensureAuthenticated('organizador'), updateTimes);
+timeRouter.put("/:id", ensureAuthenticated('admin'), updateTimes);
 timeRouter.get("/modalidade/:modalidade_id", getTimesByModalidadeID);
 timeRouter.get("/campeonato/:campeonato_id", getTimesByCampeonatoID);
 timeRouter.get("/sala/:sala", getTimesBySala);

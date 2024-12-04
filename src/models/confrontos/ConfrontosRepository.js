@@ -96,5 +96,34 @@ export default class ConfrontosRepository {
         }
     }
 
-    
+    async getTopWinningTeamsByChampionship() {
+        try {
+            const topTeams = await this.pg.manyOrNone(`
+SELECT 
+    campeonato.id AS campeonato_id,
+    campeonato.titulo AS campeonato_titulo,
+    campeonato.data_final AS campeonato_data_final,
+    times.id AS time_id, 
+    times.nome AS time_nome, 
+    COUNT(confronto.winner) AS win_count
+FROM 
+    confronto
+INNER JOIN 
+    times ON confronto.timeId = times.id
+INNER JOIN 
+    modalidade ON times.modalidade_id = modalidade.id
+INNER JOIN 
+    campeonato ON modalidade.campeonato_id = campeonato.id
+WHERE 
+    confronto.winner = true
+GROUP BY 
+    campeonato.id, campeonato.titulo, campeonato.data_final, times.id, times.nome
+ORDER BY 
+    campeonato.id, win_count DESC
+            `);
+            return topTeams;
+        } catch (error) {
+            throw error;
+        }
+    }
 }
