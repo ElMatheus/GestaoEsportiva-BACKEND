@@ -90,7 +90,29 @@ export default class TimesRepository {
 
     async getTimeByModalidadeID(modalidade_id) {
         try {
-            const time = await this.pg.manyOrNone("SELECT times.id, times.nome, times.sala, times.modalidade_id, times.status, times.pontos, SUM(CASE WHEN confronto.winner = TRUE THEN 1 ELSE 0 END) AS vitorias, SUM(CASE WHEN confronto.winner = FALSE AND confronto.tie = FALSE THEN 1 ELSE 0 END) AS derrotas FROM times LEFT JOIN confronto ON times.id = confronto.timeId WHERE LOWER(times.modalidade_id) LIKE $1 GROUP BY times.id, times.nome", modalidade_id.toLocaleLowerCase());
+            const time = await this.pg.manyOrNone(`
+                SELECT 
+                    times.id, 
+                    times.nome, 
+                    times.sala, 
+                    times.modalidade_id, 
+                    times.status, 
+                    times.pontos, 
+                    SUM(CASE WHEN confronto.winner = TRUE THEN 1 ELSE 0 END) AS vitorias, 
+                    SUM(CASE WHEN confronto.winner = FALSE AND confronto.tie = FALSE THEN 1 ELSE 0 END) AS derrotas,
+                    SUM(CASE WHEN confronto.tie = TRUE THEN 1 ELSE 0 END) AS empates
+                FROM 
+                    times 
+                LEFT JOIN 
+                    confronto 
+                ON 
+                    times.id = confronto.timeId 
+                WHERE 
+                    LOWER(times.modalidade_id) LIKE $1 
+                GROUP BY 
+                    times.id, 
+                    times.nome
+            `, modalidade_id.toLocaleLowerCase());
             return time;
         } catch (error) {
             throw error;
